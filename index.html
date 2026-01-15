@@ -4,30 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <link rel="apple-touch-icon" href="https://lunakuo1719.github.io/kana-wunfa/nanaicon.png">
-    
-    <link rel="icon" type="image/png" sizes="192x192" href="https://lunakuo1719.github.io/kana-wunfa/nanaicon.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://lunakuo1719.github.io/kana-wunfa/nanaicon.png">
-    <link rel="shortcut icon" href="https://lunakuo1719.github.io/kana-wunfa/nanaicon.png">
-
+    <link rel="apple-touch-icon" href="./nanaicon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="萌萌文法">
-
-    <meta name="theme-color" content="#fbdcde">
-
-    <link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"%E8%90%8C%E8%90%8C%E6%96%87%E6%B3%95","short_name":"%E8%90%8C%E8%90%8C%E6%96%87%E6%B3%95","start_url":"https://lunakuo1719.github.io/kana-wunfa/index.html","scope":"https://lunakuo1719.github.io/kana-wunfa/","display":"standalone","orientation":"portrait","background_color":"#FDF2F0","theme_color":"#fbdcde","icons":[{"src":"https://lunakuo1719.github.io/kana-wunfa/nanaicon.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"https://lunakuo1719.github.io/kana-wunfa/nanaicon.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <title>萌萌文法</title>
+    <meta name="apple-mobile-web-app-title" content="萌萌文法">
 
     <style>
         :root {
-            /* 您的自訂配色 */
-            --kanahei-pink: #fbdcde; 
-            --kanahei-rose: #f4a8b4; 
-            --kanahei-purple: #ead4eb; 
-            --kanahei-brown: #6d4c41; 
-            --kanahei-cream: #fef4e8; 
+            /* 調整配色：加深飽和度以適應手機螢幕 */
+            --kanahei-pink: #ffcdd2;  /* 背景粉紅漸層稍微加深 */
+            --kanahei-rose: #ff80ab;  /* 主按鈕：更鮮豔的蜜桃粉 */
+            --kanahei-purple: #ce93d8; /* 小兔：更顯眼的葡萄牛奶紫 */
+            --kanahei-brown: #5d4037; /* 文字深咖：稍微加深增加對比 */
+            --kanahei-cream: #fff3e0; 
             --gold: #fbc02d;
         }
 
@@ -40,38 +31,29 @@
 
         body { 
             margin: 0; 
-            /* 修正：padding 改小一點，避免擠壓內容 */
-            padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom) 10px;
+            padding: env(safe-area-inset-top) 15px env(safe-area-inset-bottom) 15px;
             background: linear-gradient(135deg, var(--kanahei-pink) 0%, #fff0f5 100%); 
             display: flex; 
             flex-direction: column; 
-            justify-content: center; /* 垂直置中 */
+            justify-content: flex-start; 
             align-items: center; 
-            
-            /* 關鍵修正：強制高度為視窗高度，且隱藏超出範圍，解決整頁滑動問題 */
-            height: 100dvh; 
-            width: 100vw;
-            overflow: hidden; 
+            min-height: 100vh;
+            overscroll-behavior-y: none;
         }
 
         .card {
             width: 100%;
             max-width: 480px; 
-            
-            /* 關鍵修正：卡片高度自動填滿剩餘空間，留一點邊距即可 */
-            height: 100%; 
-            max-height: 95%; /* 不要太滿 */
-            
-            /* 如果是橫式或大螢幕，限制最大高度 */
-            /* max-height: 900px;  <-- 暫時拿掉，讓它自適應 */
-            
-            margin: 0 auto;
+            height: 85vh; 
+            max-height: 900px; 
+            min-height: 600px;
+            margin: auto;
 
             /* === 智慧背景設定 (主畫面) === */
             background-color: #FDF2F0;
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                url('./wallpaper/00.jpg'), 
+                url('./wallpaper/00.jpg'),
                 radial-gradient(#E1B4D3 20%, transparent 20%), 
                 radial-gradient(#E1B4D3 20%, transparent 20%);
             
@@ -81,25 +63,23 @@
             /* ==================== */
             
             border: 5px solid var(--kanahei-brown);
-            border-radius: 30px; /* 稍微改小圓角，讓內容空間大一點 */
-            padding: 20px;       /* 稍微減少內距 */
+            border-radius: 40px; 
+            padding: 25px;
             box-shadow: 0px 10px 30px rgba(240, 98, 146, 0.25);
             position: relative;
-            
-            /* 關鍵：讓卡片內部也變成 Flex 佈局，方便分配空間 */
             display: flex;
             flex-direction: column;
-            
             z-index: 2;
-            overflow: hidden; /* 卡片本身不滾動，是內容滾動 */
+            overflow-y: auto; 
+            overflow-x: hidden;
         }
 
         .card::before {
             content: "";
             position: absolute;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
             border: 2px dashed #f8bbd0; 
-            border-radius: 25px;
+            border-radius: 30px;
             pointer-events: none; 
             z-index: 0;
         }
@@ -108,59 +88,33 @@
             z-index: 1;
         }
 
-        /* 遊戲區域佈局優化 */
-        #game-zone {
-            display: flex; 
-            flex-direction: column; 
-            height: 100%; 
-            overflow: hidden; /* 防止遊戲區撐開卡片 */
-        }
-
-        /* 選項區域：這是唯一可以滾動的地方 */
-        #choices-area {
-            flex-grow: 1;            /* 佔據所有剩餘空間 */
-            overflow-y: auto;        /* 內容太多時才出現捲軸 */
-            -webkit-overflow-scrolling: touch; /* 讓滾動更順暢 */
-            margin-bottom: 10px;
-            padding-right: 5px;      /* 避免捲軸擋住按鈕 */
-        }
-
-        /* 翻譯區塊：固定高度或自適應，不被壓縮 */
-        #hint-area {
-            flex-shrink: 0; /* 禁止被壓縮，確保一定看得到 */
-            margin-top: auto; 
-            max-height: 25vh; /* 限制最大高度，避免蓋住太多 */
-            overflow-y: auto;
-        }
-
         .header-gifs { 
             display: flex; 
             justify-content: center; 
             align-items: flex-end; 
             gap: 20px; 
-            margin: 0px 0 10px 0; /* 縮小邊距 */
+            margin: 0px 0 15px 0;
             flex-shrink: 0; 
         }
         
         .header-gifs img { 
-            width: 35%; /* 稍微縮小一點圖，讓下面空間多一點 */
+            width: 40%; 
             height: auto; 
-            max-width: 120px; 
+            max-width: 140px; 
             object-fit: contain;
         }
 
         .daily-tip-box {
             background: white; 
             border: 3px solid #deb3cf; 
-            border-radius: 15px; padding: 12px; margin-bottom: 10px;
-            font-size: 16px; /* 字體稍微縮小適應手機 */
-            color: var(--kanahei-brown); line-height: 1.4;
+            border-radius: 15px; padding: 15px; margin-bottom: 15px;
+            font-size: 18px; color: var(--kanahei-brown); line-height: 1.5;
             box-shadow: inset 0 0 10px #EFEFF1; 
             flex-shrink: 0;
             
             display: flex;
             align-items: flex-start; 
-            gap: 10px; 
+            gap: 12px; 
         }
 
         /* --- CSS 畫的粉紅小兔圖示 --- */
@@ -171,7 +125,7 @@
             border-radius: 50% 50% 45% 45%;
             position: relative;
             flex-shrink: 0;
-            margin-top: 5px; 
+            margin-top: 8px; 
         }
         .rabbit-icon::before, .rabbit-icon::after {
             content: "";
@@ -198,70 +152,65 @@
             position: absolute;
             top: 4px; left: 4px;
             width: 6px; height: 3px;
-            background: transparent;
-            border-bottom: 1.5px solid var(--kanahei-brown);
+            border-bottom: 1.5px solid var(--kanahei-brown); 
             border-radius: 0 0 50% 50%;
         }
 
         .progress-wrapper {
             display: flex;
             align-items: center; 
-            gap: 10px; 
-            margin: 5px 0 20px 0; /* 縮小邊距 */
+            gap: 15px; 
+            margin: 10px 0 30px 0; 
             width: 100%;
-            flex-shrink: 0;
         }
 
         .progress-container { 
             position: relative; 
-            height: 40px; /* 稍微變矮 */
+            height: 50px; 
             flex-grow: 1; 
-            padding: 0 25px; 
+            padding: 0 30px; 
         }
         
         .piske-runner { 
             position: absolute; 
-            bottom: 10px; 
-            width: 60px; /* 稍微縮小 Piske */
+            bottom: 12px; 
+            width: 75px; 
             transition: left 0.3s ease-out; 
             transform: translateX(-50%); 
             z-index: 10;
         }
 
         .bar-outer { 
-            height: 16px; background: var(--kanahei-cream); 
+            height: 20px; background: var(--kanahei-cream); 
             border: 3px solid var(--kanahei-brown); border-radius: 15px; 
             width: 100%; position: absolute; bottom: 0; left: 0;
             overflow: hidden;
         }
         
         .progress-container .bar-outer {
-            width: calc(100% - 50px); 
-            left: 25px;
+            width: calc(100% - 60px); 
+            left: 30px;
         }
 
         .bar-inner { height: 100%; width: 0%; background: var(--kanahei-rose); transition: width 0.3s ease-out; }
 
         .q-box { 
-            font-size: 22px; /* 調整字體大小 */
-            color: var(--kanahei-brown); 
-            margin-bottom: 15px; 
-            text-align: left; line-height: 1.4;
-            min-height: 50px;
-            flex-shrink: 0; /* 題目不被壓縮 */
+            font-size: 26px; color: var(--kanahei-brown); 
+            margin-bottom: 20px; text-align: left; line-height: 1.4;
+            min-height: 60px;
         }
 
         .btn-choice { 
-            background: white; margin-bottom: 10px; font-size: 20px; 
-            border: 3px solid var(--kanahei-brown); border-radius: 18px; 
-            width: 100%; padding: 12px 15px; text-align: left; 
-            color: var(--kanahei-brown); box-shadow: 0 4px 0 #ddd;
+            background: white; margin-bottom: 12px; font-size: 22px; 
+            border: 3px solid var(--kanahei-brown); border-radius: 20px; 
+            width: 100%; padding: 15px 18px; text-align: left; 
+            color: var(--kanahei-brown); box-shadow: 0 5px 0 #ddd;
             transition: all 0.1s; cursor: pointer;
             position: relative;
             top: 0;
         }
-        .btn-choice:active { transform: translateY(4px); box-shadow: 0 0px 0 #ddd; }
-        .btn-choice:disabled { opacity: 0.8; cursor: not-allowed; transform: none; box-shadow: 0 4px 0 #ddd; }
+        .btn-choice:active { transform: translateY(5px); box-shadow: 0 0px 0 #ddd; }
+        .btn-choice:disabled { opacity: 0.8; cursor: not-allowed; transform: none; box-shadow: 0 5px 0 #ddd; }
         @media (hover: hover) {
             .btn-choice:hover:not(:disabled) {
                 background-color: #fff0f5;
@@ -270,10 +219,10 @@
 
         .translation-box { 
             background: var(--kanahei-cream); 
-            padding: 12px; border-radius: 18px; 
+            padding: 15px; border-radius: 20px; 
             font-size: 18px; border: 3px solid var(--gold); 
             color: var(--kanahei-brown); text-align: left;
-            /* margin-top 由 flex 控制 */
+            margin-top: auto; overflow-y: auto; max-height: 140px;
         }
 
         .main-btn { 
@@ -287,19 +236,14 @@
         #collection-overlay, #win-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 2000; display: none; flex-direction: column;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
         #collection-overlay {
-            background-color: #FDF2F0;
-            background-image: 
-                url('./wallpaper/01.jpg'),
-                radial-gradient(#E1B4D3 20%, transparent 20%), 
-                radial-gradient(#E1B4D3 20%, transparent 20%);
-            
-            background-position: center, 0 0, 15px 15px;
-            background-size: cover, 30px 30px, 30px 30px;
-            background-repeat: no-repeat, repeat, repeat;
+            background-image: url('./wallpaper/01.jpg');
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
             overflow-y: auto; 
         }
 
@@ -326,11 +270,11 @@
         
         .home-round-btn {
             position: absolute; 
-            top: 15px; /* 微調位置 */
-            right: 15px;
+            top: 20px;
+            right: 20px;
             z-index: 100;
-            width: 50px; /* 稍微縮小按鈕 */
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: white; 
             border: 3px solid var(--kanahei-brown); 
             border-radius: 50%; 
@@ -355,13 +299,13 @@
 
         #next-q-btn {
             width: auto; 
-            min-width: 150px; 
+            min-width: 160px; 
             align-self: center; 
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 10px 25px;
-            font-size: 20px;
-            background: var(--kanahei-rose);
-            color: white;
+            font-size: 22px;
+            background: #ffffff;
+            color: var(--kanahei-brown);
             border: 3px solid var(--kanahei-brown);
             border-radius: 50px; 
             box-shadow: 0 5px 0 #ffc1e3; 
@@ -371,7 +315,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px; 
-            flex-shrink: 0; /* 確保按鈕不被壓縮 */
         }
         #next-q-btn:active {
             transform: translateY(5px);
@@ -383,7 +326,7 @@
             height: 0; 
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
-            border-left: 12px solid white; 
+            border-left: 12px solid var(--kanahei-brown); 
             border-radius: 2px;
         }
     </style>
@@ -428,17 +371,25 @@
             </div>
         </div>
 
+        <!-- 修正：將統計框底色從 #fdf2f0 (太淡) 加深為 #ffe3e6 (櫻花粉) -->
         <div style="background: #ffe3e6; padding: 15px; border-radius: 25px; border: 3px solid var(--kanahei-brown); margin-bottom: 15px; text-align: center;">
             <p style="font-size:20px; margin:5px 0;">已熟練：<span id="mastered-count" style="color:var(--kanahei-rose)">0</span></p>
             <p style="font-size:20px; margin:5px 0;">錯題數：<span id="failed-count">0</span> | 貼紙：<span id="sticker-count">0</span>/80</p>
         </div>
         
+        <!-- 修正：按鈕使用加深的顏色變數，看起來更清楚 -->
         <button class="main-btn" onclick="startLevel()">出發冒險囉！</button>
+        <!-- 修正：錯題補考按鈕顏色加深 -->
         <button id="retry-btn" class="main-btn" style="background:#95c2de; display:none;" onclick="startRetry()">錯題補考</button>
+        <!-- 修正：收集冊按鈕顏色加深 -->
         <button class="main-btn" style="background:#ffc845;" onclick="openAlbum()">我的收集冊</button>
+
+        <p style="text-align: center; margin-top: 15px;">
+            <a href="#" onclick="resetData()" style="color: #999; font-size: 14px; text-decoration: underline;">重置所有紀錄 (測試用)</a>
+        </p>
     </div>
 
-    <div id="game-zone" class="hidden">
+    <div id="game-zone" class="hidden" style="display: flex; flex-direction: column; height: 100%;">
         <div style="margin-top: 5px; margin-bottom: 5px; font-size: 22px; color: var(--kanahei-brown); text-align: center;">
             <span id="mode-text">開心探險中～♪</span>
         </div>
@@ -458,7 +409,7 @@
         </div>
 
         <div id="q-text" class="q-box"></div>
-        <div id="choices-area"></div>
+        <div id="choices-area" style="flex-grow: 1;"></div>
         <div id="hint-area" class="translation-box hidden"><span id="hint-text"></span></div>
         
         <button id="next-q-btn" class="hidden">下一關 GOGO! <span class="css-arrow"></span></button>
@@ -466,17 +417,34 @@
 </div>
 
 <script>
-// === 溫馨提醒：請將您的 1000 題題庫貼回下方 allQuestions 中 ===
+// === 聰明修復：同時支援 options 和 opts，不用手動改 1183 題！ ===
 const allQuestions = [
-  { q: "This is _______ elephant.", opts: ["a", "an", "the", "X"], a: "an", note: "中文翻譯：這是一隻大象。" },
-  { q: "I _______ a teacher.", opts: ["am", "is", "were", "be"], a: "am", note: "中文翻譯：我是一位老師。" },
-  { q: "His sons _______ good boys.", opts: ["is", "are", "do", "have"], a: "are", note: "中文翻譯：他的兒子們是好男孩。" },
-  { q: "They _______ cats.", opts: ["is am", "are", "be", "X"], a: "are", note: "中文翻譯：牠們是貓。" },
-  { q: "The moon _______ yellow.", opts: ["was", "were", "is", "am"], a: "is", note: "中文翻譯：月亮是黃色的。" },
-  { q: "They _______ students.", opts: ["is", "are", "be", "am"], a: "are", note: "中文翻譯：他們是學生。" },
-  { q: "She _______ a doctor.", opts: ["do", "does", "are", "is"], a: "is", note: "中文翻譯：她是一位醫生。" },
-  { q: "He _______ many books.", opts: ["is", "be", "have", "has"], a: "has", note: "中文翻譯：他有很多書。" },
-  { q: "Choose the correct sentence:", options: ["I think (that) he should work harder.", "That I think he should work harder."], a: "I think (that) he should work harder.", note: "中文翻譯：我認為他應該更努力。 (文法重點：think 之後的受詞子句 that 可省略；That 不可放在全句開頭當虛詞使用)" },
+   { q: "This is _______ elephant.", options: ["a", "an", "X", "the"], a: "an", note: "中文翻譯：這是一隻大象。" },
+   { q: "I _______ a teacher.", options: ["am", "is", "were", "be"], a: "am", note: "中文翻譯：我是一位老師。" },
+   { q: "His sons _______ good boys.", options: ["is", "are", "do", "have"], a: "are", note: "中文翻譯：他的兒子們是好男孩。" },
+   { q: "They _______ cats.", options: ["is am", "are", "be", "X"], a: "are", note: "中文翻譯：牠們是貓。" },
+   { q: "The moon _______ yellow.", options: ["was", "were", "is", "am"], a: "is", note: "中文翻譯：月亮是黃色的。" },
+   { q: "They _______ students.", options: ["is", "are", "be", "am"], a: "are", note: "中文翻譯：他們是學生。" },
+   { q: "She _______ a doctor.", options: ["do", "does", "are", "is"], a: "is", note: "中文翻譯：她是一位醫生。" },
+   { q: "He _______ many books.", options: ["is", "be", "have", "has"], a: "has", note: "中文翻譯：他有很多書。" },
+   { q: "We _______ many pens.", options: ["is", "be", "have", "has"], a: "have", note: "中文翻譯：我們有很多筆。" },
+   { q: "A teacher works in a _______.", options: ["school", "ship", "car", "train"], a: "school", note: "中文翻譯：老師在學校裡工作。" },
+   { q: "They have _______ dogs.", options: ["twelve", "a", "one", "an"], a: "twelve", note: "中文翻譯：他們有12隻狗。" },
+   { q: "We like _______ daughters.", options: ["our", "yours", "us", "you"], a: "our", note: "中文翻譯：我們喜歡我們的女兒們。" },
+   { q: "_______ house is beautiful.", options: ["I", "My", "Me", "Mine"], a: "My", note: "中文翻譯：我的房子是漂亮的。" },
+   { q: "Banana is _______.", options: ["red", "brown", "yellow", "blue"], a: "yellow", note: "中文翻譯：香蕉是黃色的" },
+   { q: "Trees are _______.", options: ["pink", "red", "black", "green"], a: "green", note: "中文翻譯：樹是綠色的。" },
+   { q: "I am _______ teacher.", options: ["he", "me", "his", "they"], a: "his", note: "中文翻譯：我是他的老師。" },
+   { q: "He is _______ teacher.", options: ["mine", "my", "yours", "hers"], a: "my", note: "中文翻譯：他是我的老師。" },
+   { q: "We are talking _______ the book.", options: ["in", "about", "on", "under"], a: "about", note: "中文翻譯：我們正在說那本書。" },
+   { q: "_______ can fly.", options: ["Dogs", "Cats", "Birds", "Fish"], a: "Birds", note: "中文翻譯：鳥會飛。" },
+   { q: "I drank _______ for breakfast.", options: ["milk", "books", "theaters", "rabbits"], a: "milk", note: "中文翻譯：我喝牛奶當早餐。" },
+   { q: "Choose the correct sentence:", options: ["I like to play the piano.", "I like play the piano."], a: "I like to play the piano.", note: "中文翻譯：我喜歡彈鋼琴。 (文法重點：like 後面接動詞需用不定詞 to+V 或動名詞 V-ing)" },
+   { q: "Choose the correct sentence:", options: ["He swim every day.", "He swims every day."], a: "He swims every day.", note: "中文翻譯：他每天游泳。 (文法重點：主詞為第三人稱單數 He，現在式一般動詞需加 s)" },
+   { q: "Choose the correct sentence:", options: ["I not his student.", "I am not his student."], a: "I am not his student.", note: "中文翻譯：我不是他的學生。 (文法重點：英文句子必須有動詞，be 動詞否定句直接在後面加 not)" },
+   { q: "Choose the correct sentence:", options: ["My father likes to play the violin.", "My father likes to playing violin."], a: "My father likes to play the violin.", note: "中文翻譯：我父親喜歡拉小提琴。 (文法重點：不定詞 to 後面必須接原形動詞)" },
+   { q: "Choose the correct sentence:", options: ["He can swims.", "He can swim."], a: "He can swim.", note: "中文翻譯：他會游泳。 (文法重點：助動詞 can 後面必須接原形動詞，不可加 s)" },
+   { q: "Choose the correct sentence:", options: ["He hates eat fish.", "He hates to eat fish."], a: "He hates to eat fish.", note: "中文翻譯：他討厭吃魚。 (文法重點：hate 後面接動詞需用不定詞 to+V 或動名詞 V-ing)" },
 ];
 
 const IMG_YES = "./heartna.gif";
@@ -527,12 +495,9 @@ function init() {
         "冒險完後，今晚給自己加一個蛋糕獎勵吧？",
         "英文慢慢變強，就像兔兔的臉頰肉一樣紮實喔！",
         "練習累了就放空三秒鐘，吸一口粉紅兔兔的能量！",
-        "不管妳是幾歲，努力學習的樣子就是最可愛的捏～",
-        "嘿嘿，腦袋瓜動一動，等一下變得跟P助一樣聰明唷！",
-        "看妳認真的樣子，手裡的飯糰都變好吃了捏～",
+        "不管幾歲，願意學習的樣子都是最可愛的捏～",
         "慢慢來，學會就是妳的囉！",
-        "一起努力，英文會越來越可愛的～",
-        "P助正在筆記本裡幫妳偷看答案...（大誤）",
+        "哇！妳今天也好棒捏！",
         "今天願意打開這裡，就已經很棒了。",
         "這裡是屬於妳的練習小角落。",
         "不用急，照自己的步調慢慢來就好。",
@@ -548,6 +513,7 @@ function init() {
 
 function startLevel() {
     isRetryMode = false;
+    // 修改：更可愛的狀態文字
     document.getElementById('mode-text').innerText = "開心探險中～♪";
     const totalQ = allQuestions.length;
     const batchSize = 20;
@@ -565,6 +531,7 @@ function startLevel() {
 
 function startRetry() {
     isRetryMode = true;
+    // 修改：更可愛的狀態文字
     document.getElementById('mode-text').innerText = "P助陪妳複習中...";
     currentGroup = [...userData.failed_list].sort(() => Math.random() - 0.5);
     setupGame();
@@ -575,9 +542,7 @@ function setupGame() {
     document.getElementById('total-num').innerText = totalInGroup;
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('game-zone').classList.remove('hidden');
-    // 修改：這裡不用 flex，讓 CSS 裡的 flex-direction: column 生效
-    // document.getElementById('game-zone').style.display = 'flex';
-    document.getElementById('game-zone').classList.remove('hidden');
+    document.getElementById('game-zone').style.display = 'flex';
     const oldBack = document.getElementById('back-home-wrapper');
     if(oldBack) oldBack.classList.add('hidden');
     renderQuestion();
@@ -597,6 +562,7 @@ function renderQuestion() {
     const area = document.getElementById('choices-area');
     area.innerHTML = "";
     
+    // === 聰明修改：這裡同時接受 options 或 opts ===
     const choices = data.options || data.opts || [];
     
     choices.forEach(opt => {
@@ -716,6 +682,13 @@ function openAlbum() {
 }
 
 function saveData() { localStorage.setItem('kana_v9', JSON.stringify(userData)); }
+
+function resetData() {
+    if(confirm("確定要重置所有進度嗎？\n(貼紙和熟練度都會消失喔！)")) {
+        localStorage.removeItem('kana_v9');
+        location.reload();
+    }
+}
 
 init();
 </script>
