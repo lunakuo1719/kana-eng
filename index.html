@@ -13,12 +13,11 @@
 
     <style>
         :root {
-            /* 調整配色：加深飽和度以適應手機螢幕 */
-            --kanahei-pink: #ffcdd2;  /* 背景粉紅漸層稍微加深 */
-            --kanahei-rose: #ff80ab;  /* 主按鈕：更鮮豔的蜜桃粉 */
-            --kanahei-purple: #ce93d8; /* 小兔：更顯眼的葡萄牛奶紫 */
-            --kanahei-brown: #5d4037; /* 文字深咖：稍微加深增加對比 */
-            --kanahei-cream: #fff3e0; 
+            --kanahei-pink: #ffcdd2;  
+            --kanahei-rose: #f4a8b4;  /* 蜜桃粉 */
+            --kanahei-purple: #ce93d8; 
+            --kanahei-brown: #6d4c41; /* 咖啡色邊框 */
+            --kanahei-cream: #fef4e8;  
             --gold: #fbc02d;
         }
 
@@ -41,6 +40,7 @@
             overscroll-behavior-y: none;
         }
 
+        /* --- 主卡片樣式 --- */
         .card {
             width: 100%;
             max-width: 480px; 
@@ -48,20 +48,15 @@
             max-height: 900px; 
             min-height: 600px;
             margin: auto;
-
-            /* === 智慧背景設定 (主畫面) === */
             background-color: #FDF2F0;
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
                 url('./wallpaper/00.jpg'),
                 radial-gradient(#E1B4D3 20%, transparent 20%), 
                 radial-gradient(#E1B4D3 20%, transparent 20%);
-            
             background-position: 0 0, center, 0 0, 15px 15px;
             background-size: cover, cover, 30px 30px, 30px 30px;
             background-repeat: no-repeat, no-repeat, repeat, repeat;
-            /* ==================== */
-            
             border: 5px solid var(--kanahei-brown);
             border-radius: 40px; 
             padding: 25px;
@@ -74,330 +69,206 @@
             overflow-x: hidden;
         }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 2px dashed #f8bbd0; 
-            border-radius: 30px;
-            pointer-events: none; 
-            z-index: 0;
-        }
-        
-        .card > * {
-            z-index: 1;
-        }
-
-        .header-gifs { 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-end; 
-            gap: 20px; 
-            margin: 0px 0 15px 0;
-            flex-shrink: 0; 
-        }
-        
-        .header-gifs img { 
-            width: 40%; 
-            height: auto; 
-            max-width: 140px; 
-            object-fit: contain;
-        }
-
-        .daily-tip-box {
-            background: white; 
-            border: 3px solid #deb3cf; 
-            border-radius: 15px; padding: 15px; margin-bottom: 15px;
-            font-size: 18px; color: var(--kanahei-brown); line-height: 1.5;
-            box-shadow: inset 0 0 10px #EFEFF1; 
-            flex-shrink: 0;
-            
-            display: flex;
-            align-items: flex-start; 
-            gap: 12px; 
-        }
-
-        /* --- CSS 畫的粉紅小兔圖示 --- */
-        .rabbit-icon {
-            width: 28px;
-            height: 24px;
-            background: var(--kanahei-purple); 
-            border-radius: 50% 50% 45% 45%;
-            position: relative;
-            flex-shrink: 0;
-            margin-top: 8px; 
-        }
-        .rabbit-icon::before, .rabbit-icon::after {
-            content: "";
-            position: absolute;
-            top: -12px;
-            width: 8px;
-            height: 16px;
-            background: var(--kanahei-purple); 
-            border-radius: 10px 10px 0 0;
-        }
-        .rabbit-icon::before { left: 3px; transform: rotate(-15deg); } 
-        .rabbit-icon::after { right: 3px; transform: rotate(15deg); } 
-        
-        .rabbit-face {
-            position: absolute;
-            top: 9px; left: 7px;
-            width: 3px; height: 3px;
-            background: var(--kanahei-brown);
-            border-radius: 50%;
-            box-shadow: 11px 0 0 var(--kanahei-brown); 
-        }
-        .rabbit-face::after {
-            content: "";
-            position: absolute;
-            top: 4px; left: 4px;
-            width: 6px; height: 3px;
-            border-bottom: 1.5px solid var(--kanahei-brown); 
-            border-radius: 0 0 50% 50%;
-        }
-
-        .progress-wrapper {
-            display: flex;
-            align-items: center; 
-            gap: 15px; 
-            margin: 10px 0 30px 0; 
-            width: 100%;
-        }
-
-        .progress-container { 
-            position: relative; 
-            height: 50px; 
-            flex-grow: 1; 
-            padding: 0 30px; 
-        }
-        
-        .piske-runner { 
-            position: absolute; 
-            bottom: 12px; 
-            width: 75px; 
-            transition: left 0.3s ease-out; 
-            transform: translateX(-50%); 
-            z-index: 10;
-        }
-
-        .bar-outer { 
-            height: 20px; background: var(--kanahei-cream); 
-            border: 3px solid var(--kanahei-brown); border-radius: 15px; 
-            width: 100%; position: absolute; bottom: 0; left: 0;
-            overflow: hidden;
-        }
-        
-        .progress-container .bar-outer {
-            width: calc(100% - 60px); 
-            left: 30px;
-        }
-
-        .bar-inner { height: 100%; width: 0%; background: var(--kanahei-rose); transition: width 0.3s ease-out; }
-
-        .q-box { 
-            font-size: 26px; color: var(--kanahei-brown); 
-            margin-bottom: 20px; text-align: left; line-height: 1.4;
-            min-height: 60px;
-        }
-
-        .btn-choice { 
-            background: white; margin-bottom: 12px; font-size: 22px; 
-            border: 3px solid var(--kanahei-brown); border-radius: 20px; 
-            width: 100%; padding: 15px 18px; text-align: left; 
-            color: var(--kanahei-brown); box-shadow: 0 5px 0 #ddd;
-            transition: all 0.1s; cursor: pointer;
-            position: relative;
-            top: 0;
-        }
-        .btn-choice:active { transform: translateY(5px); box-shadow: 0 0px 0 #ddd; }
-        .btn-choice:disabled { opacity: 0.8; cursor: not-allowed; transform: none; box-shadow: 0 5px 0 #ddd; }
-        @media (hover: hover) {
-            .btn-choice:hover:not(:disabled) {
-                background-color: #fff0f5;
-            }
-        }
-
-        .translation-box { 
-            background: var(--kanahei-cream); 
-            padding: 15px; border-radius: 20px; 
-            font-size: 18px; border: 3px solid var(--gold); 
-            color: var(--kanahei-brown); text-align: left;
-            margin-top: auto; overflow-y: auto; max-height: 140px;
-        }
-
-        .main-btn { 
-            width: 100%; padding: 15px; font-size: 22px; border-radius: 40px; 
-            background: var(--kanahei-rose); color: white; border: 4px solid var(--kanahei-brown); 
-            box-shadow: 0 6px 0 var(--kanahei-brown); margin: 8px 0; cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .main-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--kanahei-brown); }
-
-        #collection-overlay, #win-overlay {
+        /* --- 收集冊與結算層 --- */
+        #collection-overlay, #win-overlay, #big-img-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 2000; display: none; flex-direction: column;
             padding: 50px 20px;
         }
 
         #collection-overlay {
-            background-image: url('./wallpaper/01.jpg');
-            background-size: cover; 
-            background-position: center; 
-            background-repeat: no-repeat;
+            background-color: #FDF2F0;
+            background-image: 
+                url('./wallpaper/01.jpg'),
+                radial-gradient(#E1B4D3 20%, transparent 20%), 
+                radial-gradient(#E1B4D3 20%, transparent 20%);
+            background-position: center, 0 0, 15px 15px;
+            background-size: cover, 30px 30px, 30px 30px;
+            background-repeat: no-repeat, repeat, repeat;
             overflow-y: auto; 
         }
 
         #collection-content {
-            background: rgba(255, 255, 255, 0.6); 
+            background: rgba(255, 255, 255, 0.75); 
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border-radius: 35px; padding: 25px; 
+            border-radius: 35px; 
+            padding: 30px 25px; 
             border: 4px solid var(--kanahei-brown);
-            max-width: 600px; margin: 20px auto; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 600px; 
+            margin: 40px auto; 
+            width: 90%; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 0 0 5px rgba(255, 255, 255, 0.5); 
+            position: relative;
+        }
+
+        #collection-content h2 {
+            position: relative; display: inline-block; z-index: 1; padding: 5px 20px;
+            color: var(--kanahei-brown); font-size: 28px; margin: 0; text-shadow: 1px 1px 0 #fff;
+        }
+
+        #collection-content h2::before {
+            content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-2deg);
+            width: 120%; height: 80%; background: rgba(255, 128, 171, 0.6); 
+            border-left: 3px dotted #fff; border-right: 3px dotted #fff; z-index: -1; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
         }
 
         .sticker-slot {
-            aspect-ratio: 1; border: 3px dashed #ffc1e3; border-radius: 15px; 
+            aspect-ratio: 1; border: 3px solid white; border-radius: 10px; 
             overflow: hidden; background: white; display: flex; 
             align-items: center; justify-content: center;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s ease; cursor: pointer;
         }
+        .sticker-slot:hover { transform: scale(1.05) rotate(2deg); }
         .sticker-slot img { width: 100%; height: 100%; object-fit: cover; }
 
-        .hidden { display: none !important; }
-        #feedback-overlay img { width: 220px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); }
-        
-        .home-round-btn {
-            position: absolute; 
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            width: 60px;
-            height: 60px;
-            background: white; 
-            border: 3px solid var(--kanahei-brown); 
-            border-radius: 50%; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px; 
-            cursor: pointer;
-            box-shadow: 0 4px 0 rgba(109, 76, 65, 0.2); 
-            transition: all 0.1s;
+        /* --- Q彈感優化 --- */
+        .main-btn, .btn-choice, #next-q-btn, .home-round-btn {
+            transition: transform 0.1s, box-shadow 0.1s;
         }
-        .home-round-btn:active {
-            transform: translateY(4px); 
-            box-shadow: 0 0 0 rgba(109, 76, 65, 0.2); 
-        }
-        .home-round-btn img {
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain;
-            border-radius: 50%; 
+        .main-btn:active, .btn-choice:active, #next-q-btn:active, .home-round-btn:active {
+            transform: scale(0.95) translateY(4px);
         }
 
+        .main-btn { 
+            width: 100%; padding: 15px; font-size: 22px; border-radius: 40px; 
+            background: var(--kanahei-rose); color: white; border: 4px solid var(--kanahei-brown); 
+            box-shadow: 0 6px 0 var(--kanahei-brown); margin: 8px 0; cursor: pointer;
+        }
+        .main-btn:active { box-shadow: 0 0 0 var(--kanahei-brown); }
+
         #next-q-btn {
-            width: auto; 
-            min-width: 160px; 
-            align-self: center; 
-            margin-top: 20px;
-            padding: 10px 25px;
-            font-size: 22px;
-            background: #ffffff;
-            color: var(--kanahei-brown);
+            width: auto; min-width: 160px; align-self: center; margin-top: 20px;
+            padding: 10px 25px; font-size: 22px; background: var(--kanahei-rose);
+            color: white; border: 3px solid var(--kanahei-brown); border-radius: 50px; 
+            box-shadow: 0 5px 0 var(--kanahei-brown); cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px; 
+        }
+        #next-q-btn:active { box-shadow: 0 0 0 var(--kanahei-brown); }
+
+        .css-arrow { width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 12px solid white; border-radius: 2px; }
+
+        /* --- 撒花動畫樣式 --- */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        .confetti {
+            position: absolute; width: 10px; height: 10px; background: var(--kanahei-rose);
+            z-index: 2001; animation: confetti-fall 3s linear forwards;
+        }
+
+        /* --- 大圖檢視樣式 --- */
+        #big-img-overlay { background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 3000; }
+        #big-img-content { max-width: 90%; max-height: 70%; border: 10px solid white; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+
+        /* --- 進度條與其他 --- */
+        .progress-wrapper { display: flex; align-items: center; gap: 15px; margin: 10px 0 30px 0; width: 100%; }
+        .progress-container { position: relative; height: 50px; flex-grow: 1; padding: 0 30px; }
+        .piske-runner { position: absolute; bottom: 12px; width: 75px; transition: left 0.3s ease-out; transform: translateX(-50%); z-index: 10; }
+        .bar-outer { height: 20px; background: var(--kanahei-cream); border: 3px solid var(--kanahei-brown); border-radius: 15px; width: 100%; position: absolute; bottom: 0; left: 0; overflow: hidden; }
+        .progress-container .bar-outer { width: calc(100% - 60px); left: 30px; }
+        .bar-inner { height: 100%; width: 0%; background: var(--kanahei-rose); transition: width 0.3s ease-out; }
+
+        .q-box { font-size: 26px; color: var(--kanahei-brown); margin-bottom: 20px; text-align: left; line-height: 1.4; min-height: 60px; }
+        .btn-choice { 
+            background: white; margin-bottom: 12px; font-size: 22px; 
+            border: 3px solid var(--kanahei-brown); border-radius: 20px; 
+            width: 100%; padding: 15px 18px; text-align: left; 
+            color: var(--kanahei-brown); box-shadow: 0 5px 0 #ddd; cursor: pointer; position: relative;
+        }
+        .translation-box { background: var(--kanahei-cream); padding: 15px; border-radius: 20px; font-size: 18px; border: 3px solid var(--gold); color: var(--kanahei-brown); margin-top: auto; }
+        .hidden { display: none !important; }
+        .home-round-btn { position: absolute; top: 20px; right: 20px; z-index: 100; width: 60px; height: 60px; background: white; border: 3px solid var(--kanahei-brown); border-radius: 50%; display: flex; justify-content: center; align-items: center; padding: 8px; cursor: pointer; box-shadow: 0 4px 0 rgba(109,76,65,0.2); }
+        .home-round-btn img { width: 100%; height: 100%; object-fit: contain; }
+
+        .daily-tip-box { background: white; border: 3px solid #deb3cf; border-radius: 15px; padding: 15px; margin-bottom: 15px; font-size: 18px; color: var(--kanahei-brown); display: flex; align-items: flex-start; gap: 12px; }
+        .rabbit-icon { width: 28px; height: 24px; background: var(--kanahei-purple); border-radius: 50% 50% 45% 45%; position: relative; flex-shrink: 0; margin-top: 5px; }
+        .rabbit-icon::before, .rabbit-icon::after { content: ""; position: absolute; top: -12px; width: 8px; height: 16px; background: var(--kanahei-purple); border-radius: 10px 10px 0 0; }
+        .rabbit-icon::before { left: 3px; transform: rotate(-15deg); }
+        .rabbit-icon::after { right: 3px; transform: rotate(15deg); }
+        .rabbit-face { position: absolute; top: 9px; left: 7px; width: 3px; height: 3px; background: var(--kanahei-brown); border-radius: 50%; box-shadow: 11px 0 0 var(--kanahei-brown); }
+        .rabbit-face::after {content: ""; position: absolute; top: 4px; left: 4px; width: 6px; height: 3px; background: transparent; border-bottom: 1.5px solid var(--kanahei-brown); border-radius: 0 0 50% 50%; }
+
+        /* 新增：對話框樣式 */
+        .speech-bubble {
+            background: #fff;
             border: 3px solid var(--kanahei-brown);
-            border-radius: 50px; 
-            box-shadow: 0 5px 0 #ffc1e3; 
-            cursor: pointer;
-            transition: all 0.1s;
-            display: flex; 
-            align-items: center;
-            justify-content: center;
-            gap: 8px; 
+            border-radius: 20px;
+            padding: 15px;
+            margin: 10px 20px;
+            position: relative;
+            font-size: 18px;
+            color: var(--kanahei-brown);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+            line-height: 1.5;
         }
-        #next-q-btn:active {
-            transform: translateY(5px);
-            box-shadow: 0 0 0 #ffc1e3; 
-        }
-        
-        .css-arrow {
-            width: 0; 
-            height: 0; 
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            border-left: 12px solid var(--kanahei-brown); 
-            border-radius: 2px;
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: var(--kanahei-brown) transparent transparent;
         }
     </style>
 </head>
 <body>
 
 <div id="feedback-overlay" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999; display: none;">
-    <img id="feedback-img" src="./backhome.png">
+    <img id="feedback-img" src="./backhome.png" style="width: 220px;">
+</div>
+
+<div id="big-img-overlay" onclick="closeBigImage()">
+    <img id="big-img-content" src="">
+    <p style="color: white; margin-top: 20px; font-size: 20px;">捏！點一下畫面返回</p>
 </div>
 
 <div id="win-overlay" style="background: rgba(255, 255, 255, 0.95); justify-content: center; align-items: center;" onclick="location.reload()">
-    <h2 style="color: var(--kanahei-rose); font-size: 26px;">獲得新貼紙！捏！</h2>
-    <img id="reward-img" style="width: 85%; max-width: 320px; border: 5px solid var(--kanahei-brown); border-radius: 20px;" src="" onerror="this.src='./nanaicon.png'">
-    <h1 style="color: var(--kanahei-brown); font-size: 30px;">太棒了！探險大成功！</h1>
+    <div id="win-speech" class="speech-bubble">正在為妳準備貼紙捏...</div>
+    <img id="reward-img" style="width: 80%; max-width: 300px; border: 5px solid var(--kanahei-brown); border-radius: 20px; margin: 10px 0;" src="">
+    <h1 id="win-title" style="color: var(--kanahei-brown); font-size: 26px; margin: 10px 0;">太棒了！探險大成功！</h1>
     <p style="color: #888; font-size: 16px;">(點擊畫面重新開始)</p>
 </div>
 
 <div id="collection-overlay">
     <div id="collection-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="color: var(--kanahei-brown); font-size: 28px; margin:0; text-shadow: 1px 1px 0 #fff;">我的收集冊</h2>
-            <button onclick="document.getElementById('collection-overlay').style.display='none'" style="padding: 8px 20px; border-radius: 15px; border: 3px solid var(--kanahei-brown); background: var(--gold); font-size: 18px; color: var(--kanahei-brown); font-weight: bold;">返回</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2>我的收集冊</h2>
+            <button onclick="document.getElementById('collection-overlay').style.display='none'" style="padding: 8px 20px; border-radius: 15px; border: 3px solid var(--kanahei-brown); background: var(--gold); font-size: 18px; color: var(--kanahei-brown); font-weight: bold; cursor:pointer;">返回</button>
         </div>
-        <div id="album-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;"></div>
+        <div id="album-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;"></div>
     </div>
 </div>
 
 <div class="card">
     <div id="dashboard">
-        <div class="header-gifs">
-            <img src="./heade-M.gif">
-            <img src="./heade_r.gif">
+        <div style="display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-bottom: 15px;">
+            <img src="./heade-M.gif" style="width: 40%; max-width: 140px;">
+            <img src="./heade_r.gif" style="width: 40%; max-width: 140px;">
         </div>
-        
         <h1 style="color: #CE8467; margin:0 0 15px 0; font-size: 32px; text-align: center; text-shadow: 2px 2px 0px #fff;">萌萌文法探險隊～捏！</h1>
-        
         <div class="daily-tip-box">
             <div class="rabbit-icon"><div class="rabbit-face"></div></div>
-            <div>
-                <b>軟軟小筆記：</b><br>
-                <span id="tip-text">正在整理筆記中...</span>
-            </div>
+            <div><b>軟軟小筆記：</b><br><span id="tip-text">偷偷翻開小抄...</span></div>
         </div>
-
-        <!-- 修正：將統計框底色從 #fdf2f0 (太淡) 加深為 #ffe3e6 (櫻花粉) -->
         <div style="background: #ffe3e6; padding: 15px; border-radius: 25px; border: 3px solid var(--kanahei-brown); margin-bottom: 15px; text-align: center;">
             <p style="font-size:20px; margin:5px 0;">已熟練：<span id="mastered-count" style="color:var(--kanahei-rose)">0</span></p>
             <p style="font-size:20px; margin:5px 0;">錯題數：<span id="failed-count">0</span> | 貼紙：<span id="sticker-count">0</span>/80</p>
         </div>
-        
-        <!-- 修正：按鈕使用加深的顏色變數，看起來更清楚 -->
         <button class="main-btn" onclick="startLevel()">出發冒險囉！</button>
-        <!-- 修正：錯題補考按鈕顏色加深 -->
         <button id="retry-btn" class="main-btn" style="background:#95c2de; display:none;" onclick="startRetry()">錯題補考</button>
-        <!-- 修正：收集冊按鈕顏色加深 -->
         <button class="main-btn" style="background:#ffc845;" onclick="openAlbum()">我的收集冊</button>
-
         <p style="text-align: center; margin-top: 15px;">
             <a href="#" onclick="resetData()" style="color: #999; font-size: 14px; text-decoration: underline;">重置所有紀錄 (測試用)</a>
         </p>
     </div>
 
     <div id="game-zone" class="hidden" style="display: flex; flex-direction: column; height: 100%;">
-        <div style="margin-top: 5px; margin-bottom: 5px; font-size: 22px; color: var(--kanahei-brown); text-align: center;">
-            <span id="mode-text">開心探險中～♪</span>
-        </div>
-        
-        <button class="home-round-btn" onclick="location.reload()" title="回到主畫面">
-            <img src="./backhome.png">
-        </button>
-        
+        <div style="margin-top: 5px; margin-bottom: 5px; font-size: 22px; color: var(--kanahei-brown); text-align: center;"><span id="mode-text">開心探險中～♪</span></div>
+        <button class="home-round-btn" onclick="location.reload()"><img src="./backhome.png"></button>
         <div class="progress-wrapper">
             <div class="progress-container">
                 <img id="piske-img" src="./cutepi.gif" class="piske-runner">
@@ -407,48 +278,27 @@
                 <span id="progress-num">0</span> / <span id="total-num">20</span>
             </div>
         </div>
-
         <div id="q-text" class="q-box"></div>
         <div id="choices-area" style="flex-grow: 1;"></div>
         <div id="hint-area" class="translation-box hidden"><span id="hint-text"></span></div>
-        
         <button id="next-q-btn" class="hidden">下一關 GOGO! <span class="css-arrow"></span></button>
     </div>
 </div>
 
 <script>
-// === 聰明修復：同時支援 options 和 opts，不用手動改 1183 題！ ===
 const allQuestions = [
-   { q: "This is _______ elephant.", options: ["a", "an", "X", "the"], a: "an", note: "中文翻譯：這是一隻大象。" },
-   { q: "I _______ a teacher.", options: ["am", "is", "were", "be"], a: "am", note: "中文翻譯：我是一位老師。" },
-   { q: "His sons _______ good boys.", options: ["is", "are", "do", "have"], a: "are", note: "中文翻譯：他的兒子們是好男孩。" },
-   { q: "They _______ cats.", options: ["is am", "are", "be", "X"], a: "are", note: "中文翻譯：牠們是貓。" },
-   { q: "The moon _______ yellow.", options: ["was", "were", "is", "am"], a: "is", note: "中文翻譯：月亮是黃色的。" },
-   { q: "They _______ students.", options: ["is", "are", "be", "am"], a: "are", note: "中文翻譯：他們是學生。" },
-   { q: "She _______ a doctor.", options: ["do", "does", "are", "is"], a: "is", note: "中文翻譯：她是一位醫生。" },
-   { q: "He _______ many books.", options: ["is", "be", "have", "has"], a: "has", note: "中文翻譯：他有很多書。" },
-   { q: "We _______ many pens.", options: ["is", "be", "have", "has"], a: "have", note: "中文翻譯：我們有很多筆。" },
-   { q: "A teacher works in a _______.", options: ["school", "ship", "car", "train"], a: "school", note: "中文翻譯：老師在學校裡工作。" },
-   { q: "They have _______ dogs.", options: ["twelve", "a", "one", "an"], a: "twelve", note: "中文翻譯：他們有12隻狗。" },
-   { q: "We like _______ daughters.", options: ["our", "yours", "us", "you"], a: "our", note: "中文翻譯：我們喜歡我們的女兒們。" },
-   { q: "_______ house is beautiful.", options: ["I", "My", "Me", "Mine"], a: "My", note: "中文翻譯：我的房子是漂亮的。" },
-   { q: "Banana is _______.", options: ["red", "brown", "yellow", "blue"], a: "yellow", note: "中文翻譯：香蕉是黃色的" },
-   { q: "Trees are _______.", options: ["pink", "red", "black", "green"], a: "green", note: "中文翻譯：樹是綠色的。" },
-   { q: "I am _______ teacher.", options: ["he", "me", "his", "they"], a: "his", note: "中文翻譯：我是他的老師。" },
-   { q: "He is _______ teacher.", options: ["mine", "my", "yours", "hers"], a: "my", note: "中文翻譯：他是我的老師。" },
-   { q: "We are talking _______ the book.", options: ["in", "about", "on", "under"], a: "about", note: "中文翻譯：我們正在說那本書。" },
-   { q: "_______ can fly.", options: ["Dogs", "Cats", "Birds", "Fish"], a: "Birds", note: "中文翻譯：鳥會飛。" },
-   { q: "I drank _______ for breakfast.", options: ["milk", "books", "theaters", "rabbits"], a: "milk", note: "中文翻譯：我喝牛奶當早餐。" },
-   { q: "Choose the correct sentence:", options: ["I like to play the piano.", "I like play the piano."], a: "I like to play the piano.", note: "中文翻譯：我喜歡彈鋼琴。 (文法重點：like 後面接動詞需用不定詞 to+V 或動名詞 V-ing)" },
-   { q: "Choose the correct sentence:", options: ["He swim every day.", "He swims every day."], a: "He swims every day.", note: "中文翻譯：他每天游泳。 (文法重點：主詞為第三人稱單數 He，現在式一般動詞需加 s)" },
-   { q: "Choose the correct sentence:", options: ["I not his student.", "I am not his student."], a: "I am not his student.", note: "中文翻譯：我不是他的學生。 (文法重點：英文句子必須有動詞，be 動詞否定句直接在後面加 not)" },
-   { q: "Choose the correct sentence:", options: ["My father likes to play the violin.", "My father likes to playing violin."], a: "My father likes to play the violin.", note: "中文翻譯：我父親喜歡拉小提琴。 (文法重點：不定詞 to 後面必須接原形動詞)" },
-   { q: "Choose the correct sentence:", options: ["He can swims.", "He can swim."], a: "He can swim.", note: "中文翻譯：他會游泳。 (文法重點：助動詞 can 後面必須接原形動詞，不可加 s)" },
-   { q: "Choose the correct sentence:", options: ["He hates eat fish.", "He hates to eat fish."], a: "He hates to eat fish.", note: "中文翻譯：他討厭吃魚。 (文法重點：hate 後面接動詞需用不定詞 to+V 或動名詞 V-ing)" },
+   { q: "This is _______ elephant.", options: ["a", "an", "X", "the"], a: "an", note: "這是一隻大象。" },
+   { q: "I _______ a teacher.", options: ["am", "is", "were", "be"], a: "am", note: "我是一位老師。" },
+   { q: "His sons _______ good boys.", options: ["is", "are", "do", "have"], a: "are", note: "他的兒子們是好男孩。" },
+   { q: "They _______ cats.", options: ["is am", "are", "be", "X"], a: "are", note: "牠們是貓。" },
+   { q: "The moon _______ yellow.", options: ["was", "were", "is", "am"], a: "is", note: "月亮是黃色的。" },
+   { q: "They _______ students.", options: ["is", "are", "be", "am"], a: "are", note: "他們是學生。" },
+   { q: "She _______ a doctor.", options: ["do", "does", "are", "is"], a: "is", note: "她是一位醫生。" },
+   { q: "He _______ many books.", options: ["is", "be", "have", "has"], a: "has", note: "他有很多書。" },
+   { q: "We _______ many pens.", options: ["is", "be", "have", "has"], a: "have", note: "我們有很多筆。" },
+   { q: "A teacher works in a _______.", options: ["school", "ship", "car", "train"], a: "school", note: "老師在學校裡工作。" }
 ];
 
-const IMG_YES = "./heartna.gif";
-const IMG_WRONG = "./Wrong.gif";
 const STICKERS_NORMAL = Array.from({length: 70}, (_, i) => `./stickers/${String(i+1).padStart(2, '0')}.jpg`);
 const STICKERS_SPECIAL = Array.from({length: 10}, (_, i) => `./stickers/special/${String(i+1).padStart(2, '0')}.jpg`);
 
@@ -463,75 +313,18 @@ function init() {
     document.getElementById('failed-count').innerText = userData.failed_list.length;
     document.getElementById('sticker-count').innerText = userData.stickers.length;
     document.getElementById('retry-btn').style.display = (userData.failed_list.length > 0) ? "inline-block" : "none";
-    
-    // 時間問候語
-    const hour = new Date().getHours();
-    let timeGreetings = [];
-
-    if (hour >= 5 && hour < 12) {
-        timeGreetings = [
-            "早安！跟著P助伸個懶腰，啟動大腦引擎吧！",
-            "早安～今天也是充滿希望的一天，一起加油捏！",
-            "一日之計在於晨，把英文變成妳的超能力！"
-        ];
-    } else if (hour >= 12 && hour < 18) {
-        timeGreetings = [
-            "下午茶時間到囉！吃塊餅乾，英文也會變甜甜的。",
-            "有點想睡覺嗎？跟著兔兔跳一跳，精神百倍喔！",
-            "午後的陽光剛剛好，最適合來點輕鬆的文法冒險～"
-        ];
-    } else {
-        timeGreetings = [
-            "今天辛苦了，練完這組就跟兔兔一起去夢鄉找P助吧！",
-            "晚上好～睡前一點點小練習，記憶力會超級加倍喔！",
-            "一天的結束，用可愛的英文探險畫下完美句點吧！"
-        ];
-    }
-    
-    const selectedTimeGreeting = timeGreetings[Math.floor(Math.random() * timeGreetings.length)];
-
-    const tips = [
-        "現在是專屬妳的軟綿綿練習時間。",
-        "冒險完後，今晚給自己加一個蛋糕獎勵吧？",
-        "英文慢慢變強，就像兔兔的臉頰肉一樣紮實喔！",
-        "練習累了就放空三秒鐘，吸一口粉紅兔兔的能量！",
-        "不管幾歲，願意學習的樣子都是最可愛的捏～",
-        "慢慢來，學會就是妳的囉！",
-        "哇！妳今天也好棒捏！",
-        "今天願意打開這裡，就已經很棒了。",
-        "這裡是屬於妳的練習小角落。",
-        "不用急，照自己的步調慢慢來就好。",
-        "練習一點點，也是在往前走。",
-        "粉紅兔兔和 P助，今天也在旁邊陪妳。",
-        "有在練習的時間，都會變成妳的力量。",
-        "練習累了，記得對自己溫柔一點。"
-    ];
-    
-    const finalTip = Math.random() > 0.4 ? selectedTimeGreeting : tips[Math.floor(Math.random() * tips.length)];
-    document.getElementById('tip-text').innerText = finalTip;
+    document.getElementById('tip-text').innerText = "今天也要跟兔兔一起加油捏！";
 }
 
 function startLevel() {
     isRetryMode = false;
-    // 修改：更可愛的狀態文字
     document.getElementById('mode-text').innerText = "開心探險中～♪";
-    const totalQ = allQuestions.length;
-    const batchSize = 20;
-    const maxLevels = Math.ceil(totalQ / batchSize);
-    const startIdx = (userData.currentLevel % maxLevels) * batchSize;
-    
-    currentGroup = allQuestions.slice(startIdx, startIdx + batchSize);
-    if(currentGroup.length === 0) {
-        userData.currentLevel = 0;
-        currentGroup = allQuestions.slice(0, batchSize);
-    }
-    currentGroup = currentGroup.sort(() => Math.random() - 0.5);
+    currentGroup = allQuestions.slice(0, 20).sort(() => Math.random() - 0.5);
     setupGame();
 }
 
 function startRetry() {
     isRetryMode = true;
-    // 修改：更可愛的狀態文字
     document.getElementById('mode-text').innerText = "P助陪妳複習中...";
     currentGroup = [...userData.failed_list].sort(() => Math.random() - 0.5);
     setupGame();
@@ -543,43 +336,31 @@ function setupGame() {
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('game-zone').classList.remove('hidden');
     document.getElementById('game-zone').style.display = 'flex';
-    const oldBack = document.getElementById('back-home-wrapper');
-    if(oldBack) oldBack.classList.add('hidden');
     renderQuestion();
 }
 
 function renderQuestion() {
     isLocked = false;
     document.getElementById('next-q-btn').classList.add('hidden');
-
     if (currentGroup.length === 0) return finishLevel();
     
     const data = currentGroup[0];
     document.getElementById('q-text').innerText = data.q;
-    document.getElementById('hint-text').innerText = data.note || "加油！捏！";
+    document.getElementById('hint-text').innerText = data.note || "加油！";
     document.getElementById('hint-area').classList.add('hidden');
     
     const area = document.getElementById('choices-area');
     area.innerHTML = "";
-    
-    // === 聰明修改：這裡同時接受 options 或 opts ===
-    const choices = data.options || data.opts || [];
-    
-    choices.forEach(opt => {
+    (data.options || data.opts).forEach(opt => {
         const b = document.createElement('button');
-        b.className = "btn-choice"; 
-        b.innerText = opt;
+        b.className = "btn-choice"; b.innerText = opt;
         b.onclick = () => handleSelect(opt, b);
         area.appendChild(b);
     });
     
     const solved = totalInGroup - currentGroup.length;
     document.getElementById('progress-num').innerText = solved;
-    
-    let p = 0;
-    if(totalInGroup > 0) p = (solved/totalInGroup)*100;
-    p = Math.min(p, 100);
-    
+    let p = (solved/totalInGroup)*100;
     document.getElementById('progress-bar').style.width = p + "%";
     document.getElementById('piske-img').style.left = p + "%"; 
 }
@@ -587,92 +368,87 @@ function renderQuestion() {
 function handleSelect(opt, b) {
     if (isLocked) return;
     isLocked = true;
-    
-    const allBtns = document.querySelectorAll('.btn-choice');
-    allBtns.forEach(btn => btn.disabled = true);
-
     const cur = currentGroup[0];
     document.getElementById('hint-area').classList.remove('hidden');
-
     const nextBtn = document.getElementById('next-q-btn');
+    const allBtns = document.querySelectorAll('.btn-choice');
 
     if (opt === cur.a) {
-        document.getElementById('feedback-img').src = IMG_YES + "?t=" + Date.now();
-        document.getElementById('feedback-overlay').style.display = "block";
-        b.style.backgroundColor = "#b2cecf"; 
-        b.style.borderColor = "#4dd0e1";
-        
+        b.style.backgroundColor = "#b2cecf";
         if (isRetryMode) userData.failed_list = userData.failed_list.filter(item => item.q !== cur.q);
         else userData.mastered++;
-        
-        nextBtn.onclick = () => {
-            currentGroup.shift();
-            saveData();
-            renderQuestion();
-        };
-
+        nextBtn.onclick = () => { currentGroup.shift(); saveData(); renderQuestion(); };
     } else {
-        document.getElementById('feedback-img').src = IMG_WRONG + "?t=" + Date.now();
-        document.getElementById('feedback-overlay').style.display = "block";
-        
-        b.style.backgroundColor = "#f5f5f5"; 
-        b.style.borderColor = "#bdbdbd";
+        b.style.backgroundColor = "#f5f5f5";
         b.style.color = "#9e9e9e";
-        
+        b.style.borderColor = "#bdbdbd";
         allBtns.forEach(btn => {
             if (btn.innerText === cur.a) {
-                btn.style.backgroundColor = "#b2cecf"; 
-                btn.style.borderColor = "#4dd0e1";
-                btn.style.boxShadow = "0 0 8px #4dd0e1"; 
+                btn.style.backgroundColor = "var(--kanahei-rose)";
+                btn.style.color = "white";
+                btn.style.borderColor = "var(--kanahei-brown)";
             }
         });
-        
-        if (!isRetryMode && !userData.failed_list.some(item => item.q === cur.q)) {
-            userData.failed_list.push(cur);
-        }
-        
-        nextBtn.onclick = () => {
-            currentGroup.push(currentGroup.shift());
-            saveData();
-            renderQuestion();
-        };
+        if (!isRetryMode && !userData.failed_list.some(i => i.q === cur.q)) userData.failed_list.push(cur);
+        nextBtn.onclick = () => { currentGroup.push(currentGroup.shift()); saveData(); renderQuestion(); };
     }
-
     saveData();
-
-    setTimeout(() => {
-        document.getElementById('feedback-overlay').style.display = "none";
-    }, 1000); 
-
     nextBtn.classList.remove('hidden');
-    nextBtn.scrollIntoView({behavior: "smooth", block: "end"});
 }
 
 function finishLevel() {
-    const isSpecial = Math.random() < 0.15;
-    const pool = isSpecial ? STICKERS_SPECIAL : STICKERS_NORMAL;
+    const pool = Math.random() < 0.15 ? STICKERS_SPECIAL : STICKERS_NORMAL;
     const winUrl = pool[Math.floor(Math.random() * pool.length)];
-    
     if (!userData.stickers.includes(winUrl)) userData.stickers.push(winUrl);
     
-    document.getElementById('reward-img').src = winUrl;
-    document.getElementById('win-overlay').style.display = "flex";
+    /* --- 新增：隨機對話邏輯 --- */
+    const dialogs = [
+        "嘿咻、嘿咻...P助幫妳把這張珍貴的貼紙搬過來囉！快收下捏！",
+        "哇！這張貼紙閃閃發光的，跟妳剛才答題的樣子一模一樣喔！",
+        "20題達成！呀吼～快把這張漂亮的貼紙貼到本本裡，兔兔好羨慕喔！",
+        "這張貼紙有淡淡的草莓香味（吸氣）...是因為妳太努力了才掉出來的獎勵喔！",
+        `第 ${userData.stickers.length} 張貼紙達成！妳離『英文小博士』又更近一步了哩！`
+    ];
+    document.getElementById('win-speech').innerText = dialogs[Math.floor(Math.random() * dialogs.length)];
     
+    document.getElementById('reward-img').src = winUrl;
+    createConfetti(); 
+    document.getElementById('win-overlay').style.display = "flex";
     if (!isRetryMode) userData.currentLevel++;
     saveData();
+}
+
+function createConfetti() {
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = ['#ff80ab', '#ffcdd2', '#ce93d8', '#fbc02d'][Math.floor(Math.random() * 4)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.width = confetti.style.height = (Math.random() * 10 + 5) + 'px';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+    }
+}
+
+function showBigImage(url) {
+    document.getElementById('big-img-content').src = url;
+    document.getElementById('big-img-overlay').style.display = 'flex';
+}
+function closeBigImage() {
+    document.getElementById('big-img-overlay').style.display = 'none';
 }
 
 function openAlbum() {
     const container = document.getElementById('album-container');
     container.innerHTML = "";
-    
     [...STICKERS_NORMAL, ...STICKERS_SPECIAL].forEach((url) => {
         const hasIt = userData.stickers.includes(url);
         const item = document.createElement('div');
         item.className = "sticker-slot";
-        
         if (hasIt) {
-            item.innerHTML = `<img src="${url}" onerror="this.style.display='none';this.parentNode.innerHTML='❌'">`;
+            item.innerHTML = `<img src="${url}">`;
+            item.onclick = () => showBigImage(url);
         } else {
             item.innerHTML = `<span style="color:#ffc1e3;font-size:24px;">?</span>`;
         }
@@ -682,13 +458,7 @@ function openAlbum() {
 }
 
 function saveData() { localStorage.setItem('kana_v9', JSON.stringify(userData)); }
-
-function resetData() {
-    if(confirm("確定要重置所有進度嗎？\n(貼紙和熟練度都會消失喔！)")) {
-        localStorage.removeItem('kana_v9');
-        location.reload();
-    }
-}
+function resetData() { if(confirm("確定要重置嗎？")) { localStorage.removeItem('kana_v9'); location.reload(); } }
 
 init();
 </script>
