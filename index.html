@@ -14,230 +14,324 @@
     <style>
         :root {
             --kanahei-pink: #ffcdd2;  
-            --kanahei-rose: #f4a8b4;  /* 蜜桃粉 */
+            --kanahei-rose: #f4a8b4; 
             --kanahei-purple: #ce93d8; 
-            --kanahei-brown: #6d4c41; /* 咖啡色邊框 */
+            --kanahei-brown: #6d4c41; 
             --kanahei-cream: #fef4e8;  
             --gold: #fbc02d;
+            
+            /* --- 新角色的色票 --- */
+            --nene-gray: #e0e0e0;     /* Ne-Ne貓 */
+            --keigo-white: #ffffff;   /* 敬語兔 */
+            --capy-brown: #D9A384;    /* 水豚君 */
+            --owl-red: #ef5350;       /* 短耳貓頭鷹 */
+            --fox-orange: #ffcc80;    /* 狐狸 */
+            --bear-brown: #a1887f;    /* 小熊 */
         }
 
-        * { 
-            box-sizing: border-box; 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            font-weight: 700; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 700; -webkit-tap-highlight-color: transparent; }
 
         body { 
             margin: 0; 
             padding: env(safe-area-inset-top) 15px env(safe-area-inset-bottom) 15px;
             background: linear-gradient(135deg, var(--kanahei-pink) 0%, #fff0f5 100%); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-start; 
-            align-items: center; 
-            min-height: 100vh;
-            overscroll-behavior-y: none;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 100vh; overscroll-behavior-y: none;
         }
 
-        /* --- 主卡片樣式 --- */
         .card {
-            width: 100%;
-            max-width: 480px; 
-            height: 85vh; 
-            max-height: 900px; 
-            min-height: 600px;
-            margin: auto;
+            width: 100%; max-width: 480px; height: 85vh; max-height: 900px; min-height: 600px; margin: auto;
             background-color: #FDF2F0;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                url('./wallpaper/00.jpg'),
-                radial-gradient(#E1B4D3 20%, transparent 20%), 
-                radial-gradient(#E1B4D3 20%, transparent 20%);
-            background-position: 0 0, center, 0 0, 15px 15px;
-            background-size: cover, cover, 30px 30px, 30px 30px;
-            background-repeat: no-repeat, no-repeat, repeat, repeat;
-            border: 5px solid var(--kanahei-brown);
-            border-radius: 40px; 
-            padding: 25px;
-            box-shadow: 0px 10px 30px rgba(240, 98, 146, 0.25);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            z-index: 2;
-            overflow-y: auto; 
-            overflow-x: hidden;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('./wallpaper/00.jpg'), radial-gradient(#E1B4D3 20%, transparent 20%), radial-gradient(#E1B4D3 20%, transparent 20%);
+            background-position: 0 0, center, 0 0, 15px 15px; background-size: cover, cover, 30px 30px, 30px 30px; background-repeat: no-repeat, no-repeat, repeat, repeat;
+            border: 5px solid var(--kanahei-brown); border-radius: 40px; padding: 25px; box-shadow: 0px 10px 30px rgba(240, 98, 146, 0.25);
+            position: relative; display: flex; flex-direction: column; z-index: 2; overflow-y: auto; overflow-x: hidden;
         }
 
-        /* --- 收集冊與結算層 --- */
-        #collection-overlay, #win-overlay, #big-img-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 2000; display: none; flex-direction: column;
-            padding: 50px 20px;
+        /* --- CSS 可愛圖案區 --- */
+        .css-icon-base {
+            width: 45px; height: 40px; position: relative; flex-shrink: 0; margin-top: 2px;
         }
 
-        #collection-overlay {
-            background-color: #FDF2F0;
-            background-image: 
-                url('./wallpaper/01.jpg'),
-                radial-gradient(#E1B4D3 20%, transparent 20%), 
-                radial-gradient(#E1B4D3 20%, transparent 20%);
-            background-position: center, 0 0, 15px 15px;
-            background-size: cover, 30px 30px, 30px 30px;
-            background-repeat: no-repeat, repeat, repeat;
-            overflow-y: auto; 
-        }
-
-        #collection-content {
-            background: rgba(255, 255, 255, 0.75); 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 35px; 
-            padding: 30px 25px; 
-            border: 4px solid var(--kanahei-brown);
-            max-width: 600px; 
-            margin: 40px auto; 
-            width: 90%; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 0 0 5px rgba(255, 255, 255, 0.5); 
+        /* 1. Ne-Ne貓 */
+        .icon-neneneko {
+            background: var(--nene-gray); 
+            border-radius: 45% 45% 40% 40%;
+            height: 32px; width: 38px;
+            margin: 8px auto 0;
             position: relative;
         }
-
-        #collection-content h2 {
-            position: relative; display: inline-block; z-index: 1; padding: 5px 20px;
-            color: var(--kanahei-brown); font-size: 28px; margin: 0; text-shadow: 1px 1px 0 #fff;
+        .icon-neneneko::before, .icon-neneneko::after {
+            content: ""; position: absolute; top: -6px; width: 0; height: 0;
+            border-left: 6px solid transparent; border-right: 6px solid transparent;
+            border-bottom: 10px solid var(--nene-gray); 
+        }
+        .icon-neneneko::before { left: 2px; transform: rotate(-15deg); }
+        .icon-neneneko::after { right: 2px; transform: rotate(15deg); }
+        .neneneko-face {
+            position: absolute; top: 12px; left: 50%; margin-left: -7px; 
+            width: 4px; height: 4px;
+            background: var(--kanahei-brown); border-radius: 50%;
+            box-shadow: 10px 0 0 var(--kanahei-brown);
+        }
+        .neneneko-face::after {
+            content: ""; position: absolute; top: 4px; left: 5px; width: 5px; height: 3px;
+            border-bottom: 1.5px solid var(--kanahei-brown); border-radius: 50%;
         }
 
-        #collection-content h2::before {
-            content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-2deg);
-            width: 120%; height: 80%; background: rgba(255, 128, 171, 0.6); 
-            border-left: 3px dotted #fff; border-right: 3px dotted #fff; z-index: -1; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        /* 2. 敬語兔 */
+        .icon-keigo {
+            background: var(--keigo-white);
+            border-radius: 40% 40% 45% 45%;
+            height: 30px; width: 34px;
+            margin: 8px auto 0;
+            position: relative;
+        }
+        .icon-keigo::before, .icon-keigo::after {
+            content: ""; position: absolute; top: -12px; width: 6px; height: 16px;
+            background: var(--keigo-white); 
+            border-radius: 10px 10px 0 0;
+        }
+        .icon-keigo::before { left: 8px; }
+        .icon-keigo::after { right: 8px; }
+        .keigo-face {
+            position: absolute; top: 11px; left: 50%; margin-left: -6px;
+            width: 3px; height: 3px;
+            background: var(--kanahei-brown); border-radius: 50%;
+            box-shadow: 9px 0 0 var(--kanahei-brown);
+        }
+        .keigo-face::after {
+            content: ""; position: absolute; top: 5px; left: 4px; width: 4px; height: 2px;
+            border-bottom: 1.5px solid var(--kanahei-brown); border-radius: 50%;
         }
 
-        .sticker-slot {
-            aspect-ratio: 1; border: 3px solid white; border-radius: 10px; 
-            overflow: hidden; background: white; display: flex; 
-            align-items: center; justify-content: center;
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s ease; cursor: pointer;
+        /* 3. 水豚君 */
+        .icon-capybara {
+            background: var(--capy-brown);
+            border-radius: 40% 50% 50% 40%; 
+            height: 28px; width: 40px;
+            margin: 10px auto 0;
+            position: relative;
         }
+        .icon-capybara::before {
+            content: ""; position: absolute; top: -3px; left: 10px;
+            width: 4px; height: 4px; background: var(--capy-brown);
+            border-radius: 50%;
+            box-shadow: 15px 0 0 var(--capy-brown); 
+        }
+        .capy-face {
+            position: absolute; top: 10px; left: 24px;
+            width: 2px; height: 2px; background: var(--kanahei-brown);
+            border-radius: 50%;
+            box-shadow: 6px 0 0 var(--kanahei-brown);
+        }
+        .capy-face::after {
+            content: ""; position: absolute; top: 3px; left: 8px;
+            width: 3px; height: 2px; background: #5d4037; border-radius: 50%;
+        }
+
+        /* 4. 短耳貓頭鷹 */
+        .icon-owl {
+            background: var(--owl-red);
+            border-radius: 45% 45% 40% 40%;
+            height: 32px; width: 34px;
+            margin: 8px auto 0;
+            position: relative;
+        }
+        .icon-owl::before, .icon-owl::after {
+            content: ""; position: absolute; top: -3px; width: 8px; height: 8px;
+            background: var(--owl-red); border-radius: 50% 50% 0 0;
+        }
+        .icon-owl::before { left: 0px; transform: rotate(-10deg); }
+        .icon-owl::after { right: 0px; transform: rotate(10deg); }
+        .owl-face-white {
+            position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+            width: 22px; height: 22px;
+            background: white;
+            border-radius: 40% 40% 45% 45%;
+        }
+        .owl-eyes {
+            position: absolute; top: 7px; left: 50%; margin-left: -5px;
+            width: 4px; height: 4px; 
+            background: #3e2723; border-radius: 50%;
+            box-shadow: 6px 0 0 #3e2723;
+        }
+        .owl-eyes::after {
+            content: ""; position: absolute; top: 4px; left: 3px;
+            width: 0; height: 0; border-left: 2px solid transparent; border-right: 2px solid transparent;
+            border-top: 3px solid #ffca28;
+        }
+
+        /* 5. 狐狸 */
+        .icon-fox {
+            background: var(--fox-orange);
+            border-radius: 50% 50% 45% 45%;
+            height: 28px; width: 34px;
+            margin: 10px auto 0;
+            position: relative;
+        }
+        .icon-fox::before, .icon-fox::after {
+            content: ""; position: absolute; top: -8px; width: 0; height: 0;
+            border-left: 5px solid transparent; border-right: 5px solid transparent;
+            border-bottom: 10px solid var(--fox-orange);
+        }
+        .icon-fox::before { left: 2px; transform: rotate(-15deg); }
+        .icon-fox::after { right: 2px; transform: rotate(15deg); }
+        .fox-face {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 12px; background: white;
+            border-radius: 15px 15px 50% 50%;
+        }
+        .fox-face::after {
+            content: ""; position: absolute; top: -5px; left: 50%; margin-left: -5px;
+            width: 3px; height: 3px; 
+            background: var(--kanahei-brown); border-radius: 50%;
+            box-shadow: 7px 0 0 var(--kanahei-brown), 3.5px 5px 0 var(--kanahei-brown);
+        }
+
+        /* 6. 小熊 */
+        .icon-bear {
+            background: var(--bear-brown);
+            border-radius: 50% 50% 45% 45%;
+            height: 30px; width: 36px;
+            margin: 8px auto 0;
+            position: relative;
+        }
+        .icon-bear::before, .icon-bear::after {
+            content: ""; position: absolute; top: -4px; width: 8px; height: 8px;
+            background: var(--bear-brown); border-radius: 50%;
+        }
+        .icon-bear::before { left: 2px; }
+        .icon-bear::after { right: 2px; }
+        .bear-snout {
+            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+            width: 14px; height: 10px; background: #d7ccc8; border-radius: 50%;
+        }
+        .bear-snout::before {
+            content: ""; position: absolute; top: -5px; left: 2px;
+            width: 3px; height: 3px; 
+            background: var(--kanahei-brown); border-radius: 50%;
+            box-shadow: 7px 0 0 var(--kanahei-brown);
+        }
+        .bear-snout::after {
+            content: ""; position: absolute; top: 2px; left: 5px;
+            width: 4px; height: 3px; background: #5d4037; border-radius: 50%;
+        }
+
+        /* 7. 記憶吐司君 */
+        .icon-toast {
+            background: #edb46d;
+            border-radius: 10px 10px 4px 4px;
+            height: 32px; width: 36px;
+            margin: 8px auto 0;
+            position: relative;
+            border-bottom: 3px solid #d68c45;
+        }
+        .icon-toast::before {
+            content: ""; position: absolute; 
+            top: 3px; left: 3px;
+            width: 30px; height: 26px;
+            background: #fff8e1;
+            border-radius: 8px 8px 3px 3px;
+        }
+        .toast-face {
+            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+            width: 14px; height: 10px; z-index: 2;
+        }
+        .toast-face::before, .toast-face::after {
+            content: ""; position: absolute; top: 0;
+            width: 3px; height: 3px; background: #5d4037; border-radius: 50%;
+        }
+        .toast-face::before { left: 0; } 
+        .toast-face::after { right: 0; }
+        .toast-face span {
+            position: absolute; top: 1px; left: 50%; margin-left: -3px;
+            width: 6px; height: 3px; border-bottom: 2px solid #5d4037; border-radius: 0 0 50% 50%;
+        }
+
+        /* --------------------------- */
+
+        #collection-overlay, #win-overlay, #big-img-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2000; display: none; flex-direction: column; padding: 50px 20px; cursor: pointer; }
+        #collection-overlay { background-color: #FDF2F0; background-image: url('./wallpaper/01.jpg'); background-size: cover; overflow-y: auto; cursor: default; }
+        #collection-content { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(8px); border-radius: 35px; padding: 30px 25px; border: 4px solid var(--kanahei-brown); max-width: 600px; margin: 40px auto; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 0 0 5px rgba(255, 255, 255, 0.5); position: relative; }
+
+        #collection-content h2 { position: relative; display: inline-block; z-index: 1; padding: 5px 20px; color: var(--kanahei-brown); font-size: 28px; margin: 0; text-shadow: 1px 1px 0 #fff; }
+        #collection-content h2::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-2deg); width: 120%; height: 80%; background: rgba(255, 128, 171, 0.6); border-left: 3px dotted #fff; border-right: 3px dotted #fff; z-index: -1; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+
+        .sticker-slot { aspect-ratio: 1; border: 3px solid white; border-radius: 10px; overflow: hidden; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 2px 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
         .sticker-slot:hover { transform: scale(1.05) rotate(2deg); }
-        .sticker-slot img { width: 100%; height: 100%; object-fit: cover; }
+        .sticker-slot img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- Q彈感優化 --- */
-        .main-btn, .btn-choice, #next-q-btn, .home-round-btn {
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        .main-btn:active, .btn-choice:active, #next-q-btn:active, .home-round-btn:active {
-            transform: scale(0.95) translateY(4px);
-        }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 100% { transform: translate(1px, 1px) rotate(0deg); } }
+        @keyframes confetti-fall { 0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+        .confetti { position: absolute; width: 10px; height: 10px; z-index: 2001; animation: confetti-fall 3s linear forwards; }
+        
+        .main-btn, .btn-choice, #next-q-btn, .home-round-btn { transition: transform 0.1s, box-shadow 0.1s; }
+        .main-btn:active, .btn-choice:active, #next-q-btn:active, .home-round-btn:active { transform: scale(0.95) translateY(6px); box-shadow: 0 0 0 var(--kanahei-brown); }
 
-        .main-btn { 
-            width: 100%; padding: 15px; font-size: 22px; border-radius: 40px; 
-            background: var(--kanahei-rose); color: white; border: 4px solid var(--kanahei-brown); 
-            box-shadow: 0 6px 0 var(--kanahei-brown); margin: 8px 0; cursor: pointer;
-        }
-        .main-btn:active { box-shadow: 0 0 0 var(--kanahei-brown); }
+        .main-btn { width: 100%; padding: 15px; font-size: 22px; border-radius: 40px; background: var(--kanahei-rose); color: white; border: 4px solid var(--kanahei-brown); box-shadow: 0 6px 0 var(--kanahei-brown); margin: 8px 0; cursor: pointer; }
+        .home-round-btn { position: absolute; top: 20px; right: 20px; z-index: 100; width: 55px; height: 55px; background: white; border: 3px solid var(--kanahei-brown); border-radius: 50% !important; display: flex; justify-content: center; align-items: center; padding: 0; cursor: pointer; box-shadow: 0 4px 0 rgba(109, 76, 65, 0.2); overflow: hidden; }
+        .home-round-btn img { width: 100%; height: 100%; object-fit: contain; transform: scale(0.85); }
 
-        #next-q-btn {
-            width: auto; min-width: 160px; align-self: center; margin-top: 20px;
-            padding: 10px 25px; font-size: 22px; background: var(--kanahei-rose);
-            color: white; border: 3px solid var(--kanahei-brown); border-radius: 50px; 
-            box-shadow: 0 5px 0 var(--kanahei-brown); cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px; 
-        }
-        #next-q-btn:active { box-shadow: 0 0 0 var(--kanahei-brown); }
+        #next-q-btn { width: auto; min-width: 160px; align-self: center; margin-top: 20px; padding: 10px 25px; font-size: 22px; background: var(--kanahei-rose); color: white; border: 3px solid var(--kanahei-brown); border-radius: 50px; box-shadow: 0 5px 0 var(--kanahei-brown); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        .css-arrow { width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 12px solid white; border-radius: 2px; }
-
-        /* --- 撒花動畫樣式 --- */
-        @keyframes confetti-fall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        .confetti {
-            position: absolute; width: 10px; height: 10px; background: var(--kanahei-rose);
-            z-index: 2001; animation: confetti-fall 3s linear forwards;
+        /* 白色小箭頭 */
+        .css-arrow {
+            display: inline-block; width: 0; height: 0; 
+            border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+            border-left: 12px solid white; border-radius: 3px; 
+            margin-left: 8px; vertical-align: middle;
         }
 
-        /* --- 大圖檢視樣式 --- */
-        #big-img-overlay { background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 3000; }
-        #big-img-content { max-width: 90%; max-height: 70%; border: 10px solid white; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-
-        /* --- 進度條與其他 --- */
-        .progress-wrapper { display: flex; align-items: center; gap: 15px; margin: 10px 0 30px 0; width: 100%; }
+        .progress-wrapper { display: flex; align-items: center; gap: 15px; margin: 10px 0 10px 0; width: 100%; }
         .progress-container { position: relative; height: 50px; flex-grow: 1; padding: 0 30px; }
         .piske-runner { position: absolute; bottom: 12px; width: 75px; transition: left 0.3s ease-out; transform: translateX(-50%); z-index: 10; }
         .bar-outer { height: 20px; background: var(--kanahei-cream); border: 3px solid var(--kanahei-brown); border-radius: 15px; width: 100%; position: absolute; bottom: 0; left: 0; overflow: hidden; }
         .progress-container .bar-outer { width: calc(100% - 60px); left: 30px; }
         .bar-inner { height: 100%; width: 0%; background: var(--kanahei-rose); transition: width 0.3s ease-out; }
 
-        .q-box { font-size: 26px; color: var(--kanahei-brown); margin-bottom: 20px; text-align: left; line-height: 1.4; min-height: 60px; }
-        .btn-choice { 
-            background: white; margin-bottom: 12px; font-size: 22px; 
-            border: 3px solid var(--kanahei-brown); border-radius: 20px; 
-            width: 100%; padding: 15px 18px; text-align: left; 
-            color: var(--kanahei-brown); box-shadow: 0 5px 0 #ddd; cursor: pointer; position: relative;
-        }
-        .translation-box { background: var(--kanahei-cream); padding: 15px; border-radius: 20px; font-size: 18px; border: 3px solid var(--gold); color: var(--kanahei-brown); margin-top: auto; }
+        .q-box { font-size: 26px; color: var(--kanahei-brown); margin-bottom: 45px; text-align: left; line-height: 1.4; min-height: 60px; }
+        
+        .btn-choice { background: white; margin-bottom: 12px; font-size: 22px; border: 3px solid var(--kanahei-brown); border-radius: 20px; width: 100%; padding: 15px 18px; text-align: left; color: var(--kanahei-brown); box-shadow: 0 5px 0 #ddd; cursor: pointer; line-height: 1.3; }
+        .translation-box { background: transparent; padding: 0; font-size: 18px; color: var(--kanahei-brown); margin-top: auto; }
         .hidden { display: none !important; }
-        .home-round-btn { position: absolute; top: 20px; right: 20px; z-index: 100; width: 60px; height: 60px; background: white; border: 3px solid var(--kanahei-brown); border-radius: 50%; display: flex; justify-content: center; align-items: center; padding: 8px; cursor: pointer; box-shadow: 0 4px 0 rgba(109,76,65,0.2); }
-        .home-round-btn img { width: 100%; height: 100%; object-fit: contain; }
-
-        .daily-tip-box { background: white; border: 3px solid #deb3cf; border-radius: 15px; padding: 15px; margin-bottom: 15px; font-size: 18px; color: var(--kanahei-brown); display: flex; align-items: flex-start; gap: 12px; }
-        .rabbit-icon { width: 28px; height: 24px; background: var(--kanahei-purple); border-radius: 50% 50% 45% 45%; position: relative; flex-shrink: 0; margin-top: 5px; }
-        .rabbit-icon::before, .rabbit-icon::after { content: ""; position: absolute; top: -12px; width: 8px; height: 16px; background: var(--kanahei-purple); border-radius: 10px 10px 0 0; }
-        .rabbit-icon::before { left: 3px; transform: rotate(-15deg); }
-        .rabbit-icon::after { right: 3px; transform: rotate(15deg); }
-        .rabbit-face { position: absolute; top: 9px; left: 7px; width: 3px; height: 3px; background: var(--kanahei-brown); border-radius: 50%; box-shadow: 11px 0 0 var(--kanahei-brown); }
-        .rabbit-face::after {content: ""; position: absolute; top: 4px; left: 4px; width: 6px; height: 3px; background: transparent; border-bottom: 1.5px solid var(--kanahei-brown); border-radius: 0 0 50% 50%; }
-
-        /* 新增：對話框樣式 */
-        .speech-bubble {
-            background: #fff;
-            border: 3px solid var(--kanahei-brown);
-            border-radius: 20px;
-            padding: 15px;
-            margin: 10px 20px;
-            position: relative;
-            font-size: 18px;
-            color: var(--kanahei-brown);
-            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
-            line-height: 1.5;
+        
+        /* 軟軟小筆記區塊 */
+        .daily-tip-box { 
+            background: #f3e5f5; 
+            border: 3px solid #deb3cf; border-radius: 15px; padding: 15px; margin-bottom: 15px; font-size: 18px; color: var(--kanahei-brown); 
+            display: flex; align-items: flex-start; gap: 12px; 
         }
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 15px 15px 0;
-            border-style: solid;
-            border-color: var(--kanahei-brown) transparent transparent;
-        }
+
+        .speech-bubble { background: #fff; border: 3px solid var(--kanahei-brown); border-radius: 20px; padding: 15px; margin: 10px 10px; position: relative; font-size: 18px; color: var(--kanahei-brown); line-height: 1.5; box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
+        .speech-bubble::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); border-width: 15px 15px 0; border-style: solid; border-color: var(--kanahei-brown) transparent transparent; }
+
+        #big-img-overlay { background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; }
+        #big-img-content { max-width: 90%; max-height: 70%; border: 10px solid white; border-radius: 20px; box-shadow: 0 0 25px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
 <div id="feedback-overlay" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999; display: none;">
-    <img id="feedback-img" src="./backhome.png" style="width: 220px;">
+    <img id="feedback-img" src="./heartna.gif" style="width: 220px;">
 </div>
 
 <div id="big-img-overlay" onclick="closeBigImage()">
     <img id="big-img-content" src="">
-    <p style="color: white; margin-top: 20px; font-size: 20px;">捏！點一下畫面返回</p>
+    <p style="color: white; margin-top: 20px; font-size: 20px;">點一下畫面返回('･∀･)b</p>
 </div>
 
 <div id="win-overlay" style="background: rgba(255, 255, 255, 0.95); justify-content: center; align-items: center;" onclick="location.reload()">
-    <div id="win-speech" class="speech-bubble">正在為妳準備貼紙捏...</div>
+    <div id="win-speech" class="speech-bubble">正在準備貼紙...❤</div>
     <img id="reward-img" style="width: 80%; max-width: 300px; border: 5px solid var(--kanahei-brown); border-radius: 20px; margin: 10px 0;" src="">
-    <h1 id="win-title" style="color: var(--kanahei-brown); font-size: 26px; margin: 10px 0;">太棒了！探險大成功！</h1>
+    <h1 style="color: var(--kanahei-brown); font-size: 26px;">探險大成功！٩(๑❛ᴗ❛๑)۶ </h1>
     <p style="color: #888; font-size: 16px;">(點擊畫面重新開始)</p>
 </div>
 
 <div id="collection-overlay">
     <div id="collection-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h2>我的收集冊</h2>
-            <button onclick="document.getElementById('collection-overlay').style.display='none'" style="padding: 8px 20px; border-radius: 15px; border: 3px solid var(--kanahei-brown); background: var(--gold); font-size: 18px; color: var(--kanahei-brown); font-weight: bold; cursor:pointer;">返回</button>
+            <h2 style="color: var(--kanahei-brown); font-size: 28px;">我的收集冊</h2>
+            <button onclick="document.getElementById('collection-overlay').style.display='none'" style="padding: 8px 20px; border-radius: 15px; border: 3px solid var(--kanahei-brown); background: var(--gold); font-size: 18px; cursor:pointer;">返回</button>
         </div>
         <div id="album-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;"></div>
     </div>
@@ -249,54 +343,68 @@
             <img src="./heade-M.gif" style="width: 40%; max-width: 140px;">
             <img src="./heade_r.gif" style="width: 40%; max-width: 140px;">
         </div>
-        <h1 style="color: #CE8467; margin:0 0 15px 0; font-size: 32px; text-align: center; text-shadow: 2px 2px 0px #fff;">萌萌文法探險隊～捏！</h1>
+        <h1 style="color: #CE8467; margin:0 0 15px 0; font-size: 32px; text-align: center;">萌萌文法探險隊</h1>
+        
         <div class="daily-tip-box">
-            <div class="rabbit-icon"><div class="rabbit-face"></div></div>
-            <div><b>軟軟小筆記：</b><br><span id="tip-text">偷偷翻開小抄...</span></div>
+            <div id="tip-icon-area" class="css-icon-base"></div>
+            <div><b>偷偷跟你說：</b><br><span id="tip-text">正在翻小抄...(ゝ∀･)</span></div>
         </div>
+
         <div style="background: #ffe3e6; padding: 15px; border-radius: 25px; border: 3px solid var(--kanahei-brown); margin-bottom: 15px; text-align: center;">
-            <p style="font-size:20px; margin:5px 0;">已熟練：<span id="mastered-count" style="color:var(--kanahei-rose)">0</span></p>
-            <p style="font-size:20px; margin:5px 0;">錯題數：<span id="failed-count">0</span> | 貼紙：<span id="sticker-count">0</span>/80</p>
+            <p style="font-size:20px; margin:5px 0;">已熟練：<span id="mastered-count">0</span> | 錯題數：<span id="failed-count">0</span> | 貼紙：<span id="sticker-count">0</span>/80</p>
         </div>
-        <button class="main-btn" onclick="startLevel()">出發冒險囉！</button>
-        <button id="retry-btn" class="main-btn" style="background:#95c2de; display:none;" onclick="startRetry()">錯題補考</button>
-        <button class="main-btn" style="background:#ffc845;" onclick="openAlbum()">我的收集冊</button>
-        <p style="text-align: center; margin-top: 15px;">
-            <a href="#" onclick="resetData()" style="color: #999; font-size: 14px; text-decoration: underline;">重置所有紀錄 (測試用)</a>
-        </p>
+        <button class="main-btn" onclick="startLevel()">出發冒險囉！(ﾉ>ω<)ﾉ</button>
+        <button id="retry-btn" class="main-btn" style="background:#95c2de; display:none;" onclick="startRetry()">錯題補考ㅇㅅㅇ</button>
+        <button class="main-btn" style="background:#ffc845;" onclick="openAlbum()">我的收集冊~✿</button>
+        <p style="text-align: center; margin-top: 15px;"><a href="#" onclick="resetData()" style="color: #999; font-size: 14px;">重置紀錄</a></p>
     </div>
 
     <div id="game-zone" class="hidden" style="display: flex; flex-direction: column; height: 100%;">
-        <div style="margin-top: 5px; margin-bottom: 5px; font-size: 22px; color: var(--kanahei-brown); text-align: center;"><span id="mode-text">開心探險中～♪</span></div>
+        <div style="text-align: center; font-size: 20px; color: var(--kanahei-brown); margin: 5px 0; font-weight: bold;"><span id="mode-text">開心探險中～♪</span></div>
         <button class="home-round-btn" onclick="location.reload()"><img src="./backhome.png"></button>
         <div class="progress-wrapper">
             <div class="progress-container">
                 <img id="piske-img" src="./cutepi.gif" class="piske-runner">
                 <div class="bar-outer"><div class="bar-inner" id="progress-bar"></div></div>
             </div>
-            <div style="font-size: 22px; color: var(--kanahei-brown); white-space: nowrap;">
-                <span id="progress-num">0</span> / <span id="total-num">20</span>
+            <div style="font-size: 20px; color: var(--kanahei-brown); white-space: nowrap;"><span id="progress-num">0</span> / <span id="total-num">20</span></div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <div id="q-text" class="q-box" style="margin-bottom: 5px;"></div>
+            <div id="sos-area" class="hidden" style="text-align: left; margin-bottom: 20px;">
+                <button onclick="toggleTrans()" style="background:none; border:none; color:#f4a8b4; cursor:pointer; font-size:16px; padding:0;">
+                    <span style="border-bottom: 2px dashed #f4a8b4;">(•ө•)?? 看不懂點我</span>
+                </button>
+                <div id="q-trans" class="hidden" style="color: #888; font-size: 18px; margin-top: 5px; font-weight: normal;"></div>
             </div>
         </div>
-        <div id="q-text" class="q-box"></div>
+
         <div id="choices-area" style="flex-grow: 1;"></div>
         <div id="hint-area" class="translation-box hidden"><span id="hint-text"></span></div>
-        <button id="next-q-btn" class="hidden">下一關 GOGO! <span class="css-arrow"></span></button>
+        <button id="next-q-btn" class="hidden" onclick="nextQuestion()">
+            下一關 GOGO！ <span class="css-arrow"></span>
+        </button>
     </div>
 </div>
 
 <script>
+// --- 媽咪請把你的 1183 題貼在下面 ---
 const allQuestions = [
-   { q: "This is _______ elephant.", options: ["a", "an", "X", "the"], a: "an", note: "這是一隻大象。" },
-   { q: "I _______ a teacher.", options: ["am", "is", "were", "be"], a: "am", note: "我是一位老師。" },
-   { q: "His sons _______ good boys.", options: ["is", "are", "do", "have"], a: "are", note: "他的兒子們是好男孩。" },
-   { q: "They _______ cats.", options: ["is am", "are", "be", "X"], a: "are", note: "牠們是貓。" },
-   { q: "The moon _______ yellow.", options: ["was", "were", "is", "am"], a: "is", note: "月亮是黃色的。" },
-   { q: "They _______ students.", options: ["is", "are", "be", "am"], a: "are", note: "他們是學生。" },
-   { q: "She _______ a doctor.", options: ["do", "does", "are", "is"], a: "is", note: "她是一位醫生。" },
-   { q: "He _______ many books.", options: ["is", "be", "have", "has"], a: "has", note: "他有很多書。" },
-   { q: "We _______ many pens.", options: ["is", "be", "have", "has"], a: "have", note: "我們有很多筆。" },
-   { q: "A teacher works in a _______.", options: ["school", "ship", "car", "train"], a: "school", note: "老師在學校裡工作。" }
+  { q: "This is _______ elephant.", opts: ["a", "an", "the", "X"], a: "an", trans: "這是一隻大象。(elephant: 大象)", note: "中文翻譯：這是一隻大象。" },
+  { q: "I _______ a teacher.", opts: ["am", "is", "were", "be"], a: "am", trans: "我是一位老師。(teacher: 老師)", note: "中文翻譯：我是一位老師。" },
+  { q: "His sons _______ good boys.", opts: ["is", "are", "do", "have"], a: "are", trans: "他的兒子們是好男孩。(sons: 兒子們)", note: "中文翻譯：他的兒子們是好男孩。" },
+  { q: "They _______ cats.", opts: ["is am", "are", "be", "X"], a: "are", trans: "牠們是貓。(cats: 貓)", note: "中文翻譯：牠們是貓。" },
+  { q: "The moon _______ yellow.", opts: ["was", "were", "is", "am"], a: "is", trans: "月亮是黃色的。(moon: 月亮)", note: "中文翻譯：月亮是黃色的。" },
+  { q: "They _______ students.", opts: ["is", "are", "be", "am"], a: "are", trans: "他們是學生。(student: 學生)", note: "中文翻譯：他們是學生。" },
+  { q: "She _______ a doctor.", opts: ["do", "does", "are", "is"], a: "is", trans: "她是一位醫生。(doctor: 醫生)", note: "中文翻譯：她是一位醫生。" },
+  { q: "He _______ many books.", opts: ["is", "be", "have", "has"], a: "has", trans: "他有很多書。(book: 書)", note: "中文翻譯：他有很多書。" },
+  { q: "We _______ many pens.", opts: ["is", "be", "have", "has"], a: "have", trans: "我們有很多筆。(pen: 筆)", note: "中文翻譯：我們有很多筆。" },
+  { q: "A teacher works in a _______.", opts: ["school", "ship", "car", "train"], a: "school", trans: "老師在學校裡工作。(work: 工作)", note: "中文翻譯：老師在學校裡工作。" },
+  { q: "Choose the correct sentence:", options: ["I like to play the piano.", "I like play the piano."], a: "I like to play the piano.", trans: "選出正確的句子。(我喜歡彈鋼琴)", note: "中文翻譯：我喜歡彈鋼琴。文法重點：like 後面接動詞需用不定詞 to+V 或動名詞 V-ing" },
+  { q: "Choose the correct sentence:", options: ["He swim every day.", "He swims every day."], a: "He swims every day.", trans: "選出正確的句子。(他每天游泳)", note: "中文翻譯：他每天游泳。文法重點：主詞為第三人稱單數 He，現在式一般動詞需加 s" },
+  { q: "Choose the correct sentence:", options: ["I not his student.", "I am not his student."], a: "I am not his student.", trans: "選出正確的句子。(我不是他的學生)", note: "中文翻譯：我不是他的學生。文法重點：英文句子必須有動詞，be 動詞否定句直接在後面加 not" },
+ 
 ];
 
 const STICKERS_NORMAL = Array.from({length: 70}, (_, i) => `./stickers/${String(i+1).padStart(2, '0')}.jpg`);
@@ -307,25 +415,56 @@ let currentGroup = [];
 let totalInGroup = 20;
 let isLocked = false;
 let isRetryMode = false;
+let dialogRotation = 0; 
 
 function init() {
     document.getElementById('mastered-count').innerText = userData.mastered;
     document.getElementById('failed-count').innerText = userData.failed_list.length;
     document.getElementById('sticker-count').innerText = userData.stickers.length;
-    document.getElementById('retry-btn').style.display = (userData.failed_list.length > 0) ? "inline-block" : "none";
-    document.getElementById('tip-text').innerText = "今天也要跟兔兔一起加油捏！";
+    document.getElementById('retry-btn').style.display =
+        (userData.failed_list.length > 0) ? "inline-block" : "none";
+
+    const tips = [
+        "頻率副詞擺哪裡？be動詞後。<br>解釋：is always happy (be後)",
+    ];
+
+    const finalTip = tips[Math.floor(Math.random() * tips.length)];
+    document.getElementById('tip-text').innerHTML = finalTip;
+
+    // --- 這裡改成隨機出現：Ne-Ne貓、敬語兔、水豚、貓頭鷹、狐狸、小熊、記憶吐司 ---
+    const cssIcons = [
+        // 1. Ne-Ne貓 (慵懶灰貓)
+        `<div class="icon-neneneko"><div class="neneneko-face"></div></div>`,
+        // 2. 敬語兔 (認真白兔)
+        `<div class="icon-keigo"><div class="keigo-face"></div></div>`,
+        // 3. 水豚君 (維持側面)
+        `<div class="icon-capybara"><div class="capy-face"></div></div>`,
+        // 4. 短耳貓頭鷹 (紅色的Komimizuk)
+        `<div class="icon-owl"><div class="owl-face-white"><div class="owl-eyes"></div></div></div>`,
+        // 5. 狐狸
+        `<div class="icon-fox"><div class="fox-face"></div></div>`,
+        // 6. 小熊
+        `<div class="icon-bear"><div class="bear-snout"></div></div>`,
+        // 7. 記憶吐司君 (新加入)
+        `<div class="icon-toast"><div class="toast-face"><span></span></div></div>`
+    ];
+
+    const randomIcon = cssIcons[Math.floor(Math.random() * cssIcons.length)];
+    document.getElementById('tip-icon-area').innerHTML = randomIcon;
 }
+
 
 function startLevel() {
     isRetryMode = false;
-    document.getElementById('mode-text').innerText = "開心探險中～♪";
-    currentGroup = allQuestions.slice(0, 20).sort(() => Math.random() - 0.5);
+    const startIdx = (userData.currentLevel * 20) % allQuestions.length;
+    document.getElementById('mode-text').innerText = (startIdx >= 1063) ? "☑︎對錯挑戰大進擊！" : "文法島開心探險中～♫";
+    currentGroup = allQuestions.slice(startIdx, startIdx + 20).sort(() => Math.random() - 0.5);
     setupGame();
 }
 
 function startRetry() {
     isRetryMode = true;
-    document.getElementById('mode-text').innerText = "P助陪妳複習中...";
+    document.getElementById('mode-text').innerText = "P助陪你複習中...(•ө•)";
     currentGroup = [...userData.failed_list].sort(() => Math.random() - 0.5);
     setupGame();
 }
@@ -335,29 +474,40 @@ function setupGame() {
     document.getElementById('total-num').innerText = totalInGroup;
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('game-zone').classList.remove('hidden');
-    document.getElementById('game-zone').style.display = 'flex';
     renderQuestion();
 }
 
 function renderQuestion() {
     isLocked = false;
     document.getElementById('next-q-btn').classList.add('hidden');
-    if (currentGroup.length === 0) return finishLevel();
     
+    // 👇👇👇 重置翻譯顯示狀態 👇👇👇
+    document.getElementById('q-trans').classList.add('hidden'); 
+    const sosArea = document.getElementById('sos-area');
+    
+    if (currentGroup.length === 0) return finishLevel();
     const data = currentGroup[0];
     document.getElementById('q-text').innerText = data.q;
-    document.getElementById('hint-text').innerText = data.note || "加油！";
-    document.getElementById('hint-area').classList.add('hidden');
     
+    // 👇👇👇 如果有設定 trans 才顯示按鈕 👇👇👇
+    if (data.trans) {
+        sosArea.classList.remove('hidden');
+        document.getElementById('q-trans').innerText = "💡 " + data.trans;
+    } else {
+        sosArea.classList.add('hidden');
+    }
+
+    document.getElementById('hint-area').classList.add('hidden');
     const area = document.getElementById('choices-area');
     area.innerHTML = "";
     (data.options || data.opts).forEach(opt => {
         const b = document.createElement('button');
-        b.className = "btn-choice"; b.innerText = opt;
+        b.className = "btn-choice"; 
+        if (opt.length > 25) { b.style.fontSize = "17px"; b.style.padding = "10px 12px"; }
+        b.innerText = opt;
         b.onclick = () => handleSelect(opt, b);
         area.appendChild(b);
     });
-    
     const solved = totalInGroup - currentGroup.length;
     document.getElementById('progress-num').innerText = solved;
     let p = (solved/totalInGroup)*100;
@@ -365,52 +515,72 @@ function renderQuestion() {
     document.getElementById('piske-img').style.left = p + "%"; 
 }
 
+// 👇👇👇 翻譯切換功能 👇👇👇
+function toggleTrans() {
+    const transDiv = document.getElementById('q-trans');
+    if (transDiv.classList.contains('hidden')) {
+        transDiv.classList.remove('hidden');
+    } else {
+        transDiv.classList.add('hidden');
+    }
+}
+
 function handleSelect(opt, b) {
     if (isLocked) return;
     isLocked = true;
     const cur = currentGroup[0];
-    document.getElementById('hint-area').classList.remove('hidden');
-    const nextBtn = document.getElementById('next-q-btn');
-    const allBtns = document.querySelectorAll('.btn-choice');
+    const hintText = document.getElementById('hint-text');
+    let pureNote = (cur.note || "").replace("中文翻譯：", "");
+    const isCorrect = (opt === cur.a);
+    const bossKeywords = ["名詞子句", "同位語", "關係代名詞", "使役動詞", "被動語態", "假設語氣", "完成式"];
+    const isBoss = bossKeywords.some(k => pureNote.includes(k)) || cur.q.length > 55;
+    let dialogHtml = "";
 
-    if (opt === cur.a) {
-        b.style.backgroundColor = "#b2cecf";
-        if (isRetryMode) userData.failed_list = userData.failed_list.filter(item => item.q !== cur.q);
-        else userData.mastered++;
-        nextBtn.onclick = () => { currentGroup.shift(); saveData(); renderQuestion(); };
+    if (!isCorrect) {
+        dialogHtml = `<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"><div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_think.gif" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">哎呀～(˘•ω•˘)太可惜了捏！正確意思是「 ${pureNote}喔！</span></div></div><div style="display:flex; align-items:flex-end; gap:10px; flex-direction:row-reverse;"><img src="./piske.png" style="width:60px;"><div style="background:#eceff1; border:2px solid #b0bec5; border-radius:15px; padding:8px; flex:1; text-align:right;"><span style="color:#455a64; font-size:14px;">沒關係，選錯變灰色，答案是粉色框！要記起來捏！(>_<)</span></div></div></div>`;
+    } else if (isBoss) {
+        dialogHtml = `<div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_glass.gif" style="width:85px;"><div style="background:white; border:3px solid #ff8a80; border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">(推眼鏡) 咳！這題是大魔王捏！被你收服了！意思是「 ${pureNote}！</span></div></div>`;
     } else {
-        b.style.backgroundColor = "#f5f5f5";
-        b.style.color = "#9e9e9e";
-        b.style.borderColor = "#bdbdbd";
-        allBtns.forEach(btn => {
-            if (btn.innerText === cur.a) {
-                btn.style.backgroundColor = "var(--kanahei-rose)";
-                btn.style.color = "white";
-                btn.style.borderColor = "var(--kanahei-brown)";
-            }
-        });
+        dialogRotation++; const mode = dialogRotation % 3;
+        if (mode === 0) { dialogHtml = `<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"><div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_think.gif" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">沒錯！這句是「 ${pureNote}！你思考的樣子跟兔兔一樣帥喔！</span></div></div><div style="display:flex; align-items:flex-end; gap:10px; flex-direction:row-reverse;"><img src="./piske_chu.png" style="width:60px;"><div style="background:#fff0f5; border:2px solid #f4a8b4; border-radius:15px; padding:8px; flex:1; text-align:right;"><span style="color:#c2185b; font-size:14px;">喔摸摸~喔摸摸！你答對了！(≧▽≦)</span></div></div></div>`; }
+        else if (mode === 1) { dialogHtml = `<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"><div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_eat.gif" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">嚼嚼...你學英文比兔兔吃蛋糕還快捏！這句翻譯是「 ${pureNote}喔！</span></div></div><div style="display:flex; align-items:flex-end; gap:10px; flex-direction:row-reverse;"><img src="./piske_good.png" style="width:60px;"><div style="background:#e8f5e9; border:2px solid #81c784; border-radius:15px; padding:8px; flex:1; text-align:right;"><span style="color:#2e7d32; font-size:14px;">沒錯沒錯~給你一個大大的讚！d(･∀･)b</span></div></div></div>`; }
+        else { dialogHtml = `<div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_universal.png" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">這句意思是「 ${pureNote}哦！</span></div></div>`; }
+    }
+    hintText.innerHTML = dialogHtml;
+    document.getElementById('hint-area').classList.remove('hidden');
+
+    if (isCorrect) {
+        b.style.backgroundColor = "#b2cecf";
+        if (!isRetryMode) userData.mastered++;
+        else userData.failed_list = userData.failed_list.filter(item => item.q !== cur.q);
+        currentGroup.shift();
+    } else {
+        b.style.backgroundColor = "#eceff1"; b.style.color = "#b0bec5"; b.style.borderColor = "#cfd8dc";
+        document.querySelectorAll('.btn-choice').forEach(btn => { if (btn.innerText === cur.a) { btn.style.backgroundColor = "var(--kanahei-rose)"; btn.style.color = "white"; } });
         if (!isRetryMode && !userData.failed_list.some(i => i.q === cur.q)) userData.failed_list.push(cur);
-        nextBtn.onclick = () => { currentGroup.push(currentGroup.shift()); saveData(); renderQuestion(); };
+        currentGroup.push(currentGroup.shift()); 
     }
     saveData();
-    nextBtn.classList.remove('hidden');
+    document.getElementById('next-q-btn').classList.remove('hidden');
 }
+
+function nextQuestion() { renderQuestion(); }
 
 function finishLevel() {
     const pool = Math.random() < 0.15 ? STICKERS_SPECIAL : STICKERS_NORMAL;
     const winUrl = pool[Math.floor(Math.random() * pool.length)];
     if (!userData.stickers.includes(winUrl)) userData.stickers.push(winUrl);
     
-    /* --- 新增：隨機對話邏輯 --- */
+    // 媽咪想要的隨機對話
     const dialogs = [
-        "嘿咻、嘿咻...P助幫妳把這張珍貴的貼紙搬過來囉！快收下捏！",
-        "哇！這張貼紙閃閃發光的，跟妳剛才答題的樣子一模一樣喔！",
-        "20題達成！呀吼～快把這張漂亮的貼紙貼到本本裡，兔兔好羨慕喔！",
-        "這張貼紙有淡淡的草莓香味（吸氣）...是因為妳太努力了才掉出來的獎勵喔！",
-        `第 ${userData.stickers.length} 張貼紙達成！妳離『英文小博士』又更近一步了哩！`
+        "嘿咻...P助(•ө•)幫你把珍貴貼紙搬過來囉！快收下捏！",
+        "哇！閃閃發光的貼紙 ✦ 跟你剛才認真答題的樣子一樣捏！(•̀ᴗ•́)و",
+        "20題達成！(ﾉ>ω<)ﾉ呀吼～快把貼紙貼到本本裡，兔兔好羨慕喔~捏！",
+        "(吸氣) 這張貼紙有淡淡草莓香味捏...是努力的獎勵喔！ (ᕑᗢᓫ∗)",
+        `第 ${userData.stickers.length} 張貼紙達成！d(･∀･)b離英文博士更近了哩！捏！`,
     ];
-    document.getElementById('win-speech').innerText = dialogs[Math.floor(Math.random() * dialogs.length)];
     
+    document.getElementById('win-speech').innerHTML = `<img src="./bunny_piske_come on.gif" style="width:75px; display:block; margin:0 auto 10px;"> ${dialogs[Math.floor(Math.random() * dialogs.length)]}`;
     document.getElementById('reward-img').src = winUrl;
     createConfetti(); 
     document.getElementById('win-overlay').style.display = "flex";
@@ -431,14 +601,6 @@ function createConfetti() {
     }
 }
 
-function showBigImage(url) {
-    document.getElementById('big-img-content').src = url;
-    document.getElementById('big-img-overlay').style.display = 'flex';
-}
-function closeBigImage() {
-    document.getElementById('big-img-overlay').style.display = 'none';
-}
-
 function openAlbum() {
     const container = document.getElementById('album-container');
     container.innerHTML = "";
@@ -446,20 +608,17 @@ function openAlbum() {
         const hasIt = userData.stickers.includes(url);
         const item = document.createElement('div');
         item.className = "sticker-slot";
-        if (hasIt) {
-            item.innerHTML = `<img src="${url}">`;
-            item.onclick = () => showBigImage(url);
-        } else {
-            item.innerHTML = `<span style="color:#ffc1e3;font-size:24px;">?</span>`;
-        }
+        if (hasIt) { item.innerHTML = `<img src="${url}" style="width:100%; height:100%; object-fit:contain;">`; item.onclick = (e) => { e.stopPropagation(); showBigImage(url); } }
+        else { item.innerHTML = `<span style="color:#ffc1e3;font-size:24px;">?</span>`; }
         container.appendChild(item);
     });
     document.getElementById('collection-overlay').style.display = "flex";
 }
 
+function showBigImage(url) { document.getElementById('big-img-content').src = url; document.getElementById('big-img-overlay').style.display = 'flex'; }
+function closeBigImage() { document.getElementById('big-img-overlay').style.display = 'none'; }
 function saveData() { localStorage.setItem('kana_v9', JSON.stringify(userData)); }
-function resetData() { if(confirm("確定要重置嗎？")) { localStorage.removeItem('kana_v9'); location.reload(); } }
-
+function resetData() { if(confirm("確定要重置紀錄嗎？")) { localStorage.removeItem('kana_v9'); location.reload(); } }
 init();
 </script>
 </body>
