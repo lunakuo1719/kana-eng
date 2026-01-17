@@ -261,6 +261,21 @@
             cursor: default; 
             padding-top: 80px; /* 增加上方留白，讓按鈕有空間 */
         }
+
+        /* 設定妳的選項框框或按鈕的 class 名稱，例如 .option-box */
+.option-box, button {
+    transition: all 0.1s ease; /* 讓變化有動畫感，不會生硬 */
+    cursor: pointer; /* 讓手機知道這是可點擊的 */
+    -webkit-tap-highlight-color: transparent; /* 去掉 iPhone 預設醜醜的灰底 */
+}
+
+/* 這是重點！當手指「按住」(:active) 的時候 */
+.option-box:active, button:active {
+    transform: scale(0.95); /* 整個按鈕縮小一點點，像被壓下去 */
+    background-color: #ffe6eb; /* 瞬間變成「粉紅色」 (這是 P助與粉紅兔兔的粉！) */
+    border-color: #ff99cc; /* 邊框變深粉紅 */
+    box-shadow: 0 0 10px rgba(255, 153, 204, 0.5); /* 加一點粉紅光暈 */
+}
         
         #collection-content { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(8px); border-radius: 35px; padding: 30px 25px; border: 4px solid var(--kanahei-brown); max-width: 600px; margin: 40px auto; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 0 0 5px rgba(255, 255, 255, 0.5); position: relative; }
 
@@ -368,6 +383,7 @@
         <button class="main-btn" onclick="startLevel()">出發冒險囉！(ﾉ>ω<)ﾉ</button>
         <button id="retry-btn" class="main-btn" style="background:#95c2de; display:none;" onclick="startRetry()">錯題補考ㅇㅅㅇ</button>
         <button class="main-btn" style="background:#ffc845;" onclick="openAlbum()">我的收集冊~✿</button>
+        <p style="text-align: center; margin-top: 10px; color: #ccc; font-size: 12px; font-weight: normal;">Ver 1.0</p>
         
         </div>
 
@@ -1842,5 +1858,6 @@ init();
 </script>
 </body>
 </html>
+
 
 
