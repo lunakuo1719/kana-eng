@@ -373,10 +373,10 @@
         <div style="margin-bottom: 20px;">
             <div id="q-text" class="q-box" style="margin-bottom: 5px;"></div>
             <div id="sos-area" class="hidden" style="text-align: left; margin-bottom: 20px;">
-                <button onclick="toggleTrans()" style="background:none; border:none; color:#f4a8b4; cursor:pointer; font-size:16px; padding:0;">
-                    <span style="border-bottom: 2px dashed #f4a8b4;">(•ө•)?? 看不懂點我</span>
+                <button onclick="toggleTrans()" style="background:none; border:none; color:#e91e63; cursor:pointer; font-size:16px; padding:0;">
+                    <span style="border-bottom: 2px dashed #e91e63;">(•ө•)?? 看不懂點我</span>
                 </button>
-                <div id="q-trans" class="hidden" style="color: #888; font-size: 18px; margin-top: 5px; font-weight: normal;"></div>
+                <div id="q-trans" class="hidden" style="color: #555; font-size: 18px; margin-top: 5px; font-weight: normal;"></div>
             </div>
         </div>
 
@@ -391,20 +391,19 @@
 <script>
 // --- 媽咪請把你的 1183 題貼在下面 ---
 const allQuestions = [
-  { q: "This is _______ elephant.", opts: ["a", "an", "the", "X"], a: "an", trans: "這是一隻大象。(elephant: 大象)", note: "中文翻譯：這是一隻大象。" },
-  { q: "I _______ a teacher.", opts: ["am", "is", "were", "be"], a: "am", trans: "我是一位老師。(teacher: 老師)", note: "中文翻譯：我是一位老師。" },
-  { q: "His sons _______ good boys.", opts: ["is", "are", "do", "have"], a: "are", trans: "他的兒子們是好男孩。(sons: 兒子們)", note: "中文翻譯：他的兒子們是好男孩。" },
-  { q: "They _______ cats.", opts: ["is am", "are", "be", "X"], a: "are", trans: "牠們是貓。(cats: 貓)", note: "中文翻譯：牠們是貓。" },
-  { q: "The moon _______ yellow.", opts: ["was", "were", "is", "am"], a: "is", trans: "月亮是黃色的。(moon: 月亮)", note: "中文翻譯：月亮是黃色的。" },
-  { q: "They _______ students.", opts: ["is", "are", "be", "am"], a: "are", trans: "他們是學生。(student: 學生)", note: "中文翻譯：他們是學生。" },
-  { q: "She _______ a doctor.", opts: ["do", "does", "are", "is"], a: "is", trans: "她是一位醫生。(doctor: 醫生)", note: "中文翻譯：她是一位醫生。" },
-  { q: "He _______ many books.", opts: ["is", "be", "have", "has"], a: "has", trans: "他有很多書。(book: 書)", note: "中文翻譯：他有很多書。" },
-  { q: "We _______ many pens.", opts: ["is", "be", "have", "has"], a: "have", trans: "我們有很多筆。(pen: 筆)", note: "中文翻譯：我們有很多筆。" },
-  { q: "A teacher works in a _______.", opts: ["school", "ship", "car", "train"], a: "school", trans: "老師在學校裡工作。(work: 工作)", note: "中文翻譯：老師在學校裡工作。" },
-  { q: "Choose the correct sentence:", options: ["I like to play the piano.", "I like play the piano."], a: "I like to play the piano.", trans: "選出正確的句子。(我喜歡彈鋼琴)", note: "中文翻譯：我喜歡彈鋼琴。文法重點：like 後面接動詞需用不定詞 to+V 或動名詞 V-ing" },
-  { q: "Choose the correct sentence:", options: ["He swim every day.", "He swims every day."], a: "He swims every day.", trans: "選出正確的句子。(他每天游泳)", note: "中文翻譯：他每天游泳。文法重點：主詞為第三人稱單數 He，現在式一般動詞需加 s" },
-  { q: "Choose the correct sentence:", options: ["I not his student.", "I am not his student."], a: "I am not his student.", trans: "選出正確的句子。(我不是他的學生)", note: "中文翻譯：我不是他的學生。文法重點：英文句子必須有動詞，be 動詞否定句直接在後面加 not" },
- 
+    { q: "This is _______ elephant.", opts: ["a", "an", "the", "X"], a: "an", trans: "這是一隻大象。(elephant: 大象)", note: "中文翻譯：這是一隻大象。" },
+    { q: "I _______ a teacher.", opts: ["am", "is", "were", "be"], a: "am", trans: "我是一位老師。(teacher: 老師)", note: "中文翻譯：我是一位老師。" },
+    { q: "His sons _______ good boys.", opts: ["is", "are", "do", "have"], a: "are", trans: "他的兒子們是好男孩。(sons: 兒子們)", note: "中文翻譯：他的兒子們是好男孩。" },
+    { q: "They _______ cats.", opts: ["is am", "are", "be", "X"], a: "are", trans: "牠們是貓。(cats: 貓)", note: "中文翻譯：牠們是貓。" },
+    { q: "The moon _______ yellow.", opts: ["was", "were", "is", "am"], a: "is", trans: "月亮是黃色的。(moon: 月亮)", note: "中文翻譯：月亮是黃色的。" },
+    { q: "They _______ students.", opts: ["is", "are", "be", "am"], a: "are", trans: "他們是學生。(student: 學生)", note: "中文翻譯：他們是學生。" },
+    { q: "She _______ a doctor.", opts: ["do", "does", "are", "is"], a: "is", trans: "她是一位醫生。(doctor: 醫生)", note: "中文翻譯：她是一位醫生。" },
+    { q: "He _______ many books.", opts: ["is", "be", "have", "has"], a: "has", trans: "他有很多書。(book: 書)", note: "中文翻譯：他有很多書。" },
+    { q: "We _______ many pens.", opts: ["is", "be", "have", "has"], a: "have", trans: "我們有很多筆。(pen: 筆)", note: "中文翻譯：我們有很多筆。" },
+    { q: "A teacher works in a _______.", opts: ["school", "ship", "car", "train"], a: "school", trans: "老師在學校裡工作。(work: 工作)", note: "中文翻譯：老師在學校裡工作。" },
+    { q: "Choose the correct sentence:", options: ["I like to play the piano.", "I like play the piano."], a: "I like to play the piano.", trans: "選出正確的句子。(我喜歡彈鋼琴)", note: "中文翻譯：我喜歡彈鋼琴。文法重點：like 後面接動詞需用不定詞 to+V 或動名詞 V-ing" },
+    { q: "Choose the correct sentence:", options: ["He swim every day.", "He swims every day."], a: "He swims every day.", trans: "選出正確的句子。(他每天游泳)", note: "中文翻譯：他每天游泳。文法重點：主詞為第三人稱單數 He，現在式一般動詞需加 s" },
+    { q: "Choose the correct sentence:", options: ["I not his student.", "I am not his student."], a: "I am not his student.", trans: "選出正確的句子。(我不是他的學生)", note: "中文翻譯：我不是他的學生。文法重點：英文句子必須有動詞，be 動詞否定句直接在後面加 not" },
 ];
 
 const STICKERS_NORMAL = Array.from({length: 70}, (_, i) => `./stickers/${String(i+1).padStart(2, '0')}.jpg`);
@@ -536,16 +535,54 @@ function handleSelect(opt, b) {
     const isBoss = bossKeywords.some(k => pureNote.includes(k)) || cur.q.length > 55;
     let dialogHtml = "";
 
+    // 🏆 修改：只留下兔兔的對話框 🏆
     if (!isCorrect) {
-        dialogHtml = `<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"><div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_think.gif" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">哎呀～(˘•ω•˘)太可惜了捏！正確意思是「 ${pureNote}喔！</span></div></div><div style="display:flex; align-items:flex-end; gap:10px; flex-direction:row-reverse;"><img src="./piske.png" style="width:60px;"><div style="background:#eceff1; border:2px solid #b0bec5; border-radius:15px; padding:8px; flex:1; text-align:right;"><span style="color:#455a64; font-size:14px;">沒關係，選錯變灰色，答案是粉色框！要記起來捏！(>_<)</span></div></div></div>`;
+        dialogHtml = `
+            <div style="display:flex; align-items:flex-end; gap:10px;">
+                <img src="./bunny_think.gif" style="width:75px;">
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
+                    <span style="color:var(--kanahei-brown);">哎呀～(˘•ω•˘)太可惜了捏！正確意思是「 ${pureNote}喔！</span>
+                </div>
+            </div>`;
     } else if (isBoss) {
-        dialogHtml = `<div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_glass.gif" style="width:85px;"><div style="background:white; border:3px solid #ff8a80; border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">(推眼鏡) 咳！這題是大魔王捏！被你收服了！意思是「 ${pureNote}！</span></div></div>`;
+        dialogHtml = `
+            <div style="display:flex; align-items:flex-end; gap:10px;">
+                <img src="./bunny_glass.gif" style="width:85px;">
+                <div style="background:white; border:3px solid #ff8a80; border-radius:15px; padding:10px; flex:1;">
+                    <span style="color:var(--kanahei-brown);">(推眼鏡) 咳！這題是大魔王捏！被你收服了！意思是「 ${pureNote}！</span>
+                </div>
+            </div>`;
     } else {
         dialogRotation++; const mode = dialogRotation % 3;
-        if (mode === 0) { dialogHtml = `<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"><div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_think.gif" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">沒錯！這句是「 ${pureNote}！你思考的樣子跟兔兔一樣帥喔！</span></div></div><div style="display:flex; align-items:flex-end; gap:10px; flex-direction:row-reverse;"><img src="./piske_chu.png" style="width:60px;"><div style="background:#fff0f5; border:2px solid #f4a8b4; border-radius:15px; padding:8px; flex:1; text-align:right;"><span style="color:#c2185b; font-size:14px;">喔摸摸~喔摸摸！你答對了！(≧▽≦)</span></div></div></div>`; }
-        else if (mode === 1) { dialogHtml = `<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"><div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_eat.gif" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">嚼嚼...你學英文比兔兔吃蛋糕還快捏！這句翻譯是「 ${pureNote}喔！</span></div></div><div style="display:flex; align-items:flex-end; gap:10px; flex-direction:row-reverse;"><img src="./piske_good.png" style="width:60px;"><div style="background:#e8f5e9; border:2px solid #81c784; border-radius:15px; padding:8px; flex:1; text-align:right;"><span style="color:#2e7d32; font-size:14px;">沒錯沒錯~給你一個大大的讚！d(･∀･)b</span></div></div></div>`; }
-        else { dialogHtml = `<div style="display:flex; align-items:flex-end; gap:10px;"><img src="./bunny_universal.png" style="width:75px;"><div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;"><span style="color:var(--kanahei-brown);">這句意思是「 ${pureNote}哦！</span></div></div>`; }
+        if (mode === 0) { 
+            dialogHtml = `
+            <div style="display:flex; align-items:flex-end; gap:10px;">
+                <img src="./bunny_think.gif" style="width:75px;">
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
+                    <span style="color:var(--kanahei-brown);">沒錯！這句是「 ${pureNote}！你思考的樣子跟兔兔一樣帥喔！</span>
+                </div>
+            </div>`; 
+        }
+        else if (mode === 1) { 
+            dialogHtml = `
+            <div style="display:flex; align-items:flex-end; gap:10px;">
+                <img src="./bunny_eat.gif" style="width:75px;">
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
+                    <span style="color:var(--kanahei-brown);">嚼嚼...你學英文比兔兔吃蛋糕還快捏！這句翻譯是「 ${pureNote}喔！</span>
+                </div>
+            </div>`; 
+        }
+        else { 
+            dialogHtml = `
+            <div style="display:flex; align-items:flex-end; gap:10px;">
+                <img src="./bunny_universal.png" style="width:75px;">
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
+                    <span style="color:var(--kanahei-brown);">這句意思是「 ${pureNote}哦！</span>
+                </div>
+            </div>`; 
+        }
     }
+    
     hintText.innerHTML = dialogHtml;
     document.getElementById('hint-area').classList.remove('hidden');
 
