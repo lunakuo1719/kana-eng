@@ -382,7 +382,7 @@
         <button id="retry-btn" class="main-btn" style="background:#95c2de; display:none;" onclick="startRetry()">錯題補考ㅇㅅㅇ</button>
         <button class="main-btn" style="background:#ffc845;" onclick="openAlbum()">我的收集冊~✿</button>
         <div style="text-align: center; margin-top: 10px;">
-    <p style="color: #dcdcdc; font-size: 10px; margin: 0; display:inline-block;">Ver 1.2(可刷新版)</p>
+    <p style="color: #dcdcdc; font-size: 10px; margin: 0; display:inline-block;">Ver 1.3(優化對話框)</p>
     <button onclick="forceUpdate()" style="background:none; border:1px solid #c0c0c0; border-radius:10px; color:#c0c0c0; font-size:08px; padding:2px 6px; margin-left:8px; cursor:pointer;">
         ↻ 刷新
     </button>
@@ -1741,21 +1741,24 @@ function handleSelect(opt, b) {
     const isBoss = bossKeywords.some(k => pureNote.includes(k)) || cur.q.length > 55;
     let dialogHtml = "";
 
-    // 🏆 修改：只留下兔兔的對話框 🏆
+    // 🟢 優化設定：字體樣式 (24px, 加粗, 行距加大)
+    const textStyle = "color:var(--kanahei-brown); font-size: 24px; font-weight: bold; line-height: 1.6; display: block;";
+
+    // 🏆 依照原本邏輯產生對話框
     if (!isCorrect) {
         dialogHtml = `
             <div style="display:flex; align-items:flex-end; gap:10px;">
                 <img src="./bunny_think.gif" style="width:75px;">
-                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
-                    <span style="color:var(--kanahei-brown);">哎呀～(˘•ω•˘)太可惜了捏！正確意思是「 ${pureNote}喔！</span>
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:15px; flex:1;">
+                    <span style="${textStyle}">哎呀～(˘•ω•˘)太可惜了捏！正確意思是「 ${pureNote}喔！</span>
                 </div>
             </div>`;
     } else if (isBoss) {
         dialogHtml = `
             <div style="display:flex; align-items:flex-end; gap:10px;">
                 <img src="./bunny_glass.gif" style="width:85px;">
-                <div style="background:white; border:3px solid #ff8a80; border-radius:15px; padding:10px; flex:1;">
-                    <span style="color:var(--kanahei-brown);">(推眼鏡) 咳！這題是大魔王捏！被你收服了！意思是「 ${pureNote}！</span>
+                <div style="background:white; border:3px solid #ff8a80; border-radius:15px; padding:15px; flex:1;">
+                    <span style="${textStyle}">(推眼鏡) 咳！這題是大魔王捏！被你收服了！意思是「 ${pureNote}！</span>
                 </div>
             </div>`;
     } else {
@@ -1764,8 +1767,8 @@ function handleSelect(opt, b) {
             dialogHtml = `
             <div style="display:flex; align-items:flex-end; gap:10px;">
                 <img src="./bunny_think.gif" style="width:75px;">
-                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
-                    <span style="color:var(--kanahei-brown);">沒錯！這句是「 ${pureNote}！你思考的樣子跟兔兔一樣帥喔！</span>
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:15px; flex:1;">
+                    <span style="${textStyle}">沒錯！這句是「 ${pureNote}！你思考的樣子跟兔兔一樣帥喔！</span>
                 </div>
             </div>`; 
         }
@@ -1773,8 +1776,8 @@ function handleSelect(opt, b) {
             dialogHtml = `
             <div style="display:flex; align-items:flex-end; gap:10px;">
                 <img src="./bunny_eat.gif" style="width:75px;">
-                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
-                    <span style="color:var(--kanahei-brown);">嚼嚼...你學英文比兔兔吃蛋糕還快捏！這句翻譯是「 ${pureNote}喔！</span>
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:15px; flex:1;">
+                    <span style="${textStyle}">嚼嚼...你學英文比兔兔吃蛋糕還快捏！這句翻譯是「 ${pureNote}喔！</span>
                 </div>
             </div>`; 
         }
@@ -1782,8 +1785,8 @@ function handleSelect(opt, b) {
             dialogHtml = `
             <div style="display:flex; align-items:flex-end; gap:10px;">
                 <img src="./bunny_universal.png" style="width:75px;">
-                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:10px; flex:1;">
-                    <span style="color:var(--kanahei-brown);">這句意思是「 ${pureNote}哦！</span>
+                <div style="background:white; border:3px solid var(--kanahei-pink); border-radius:15px; padding:15px; flex:1;">
+                    <span style="${textStyle}">這句意思是「 ${pureNote}哦！</span>
                 </div>
             </div>`; 
         }
@@ -1804,7 +1807,19 @@ function handleSelect(opt, b) {
         currentGroup.push(currentGroup.shift()); 
     }
     saveData();
+    
+    // 顯示下一題按鈕
     document.getElementById('next-q-btn').classList.remove('hidden');
+
+    // 🚀 媽咪請看這行！這是自動滑動的魔法！
+    // 它會抓取卡片區域，然後平滑地捲動到最底部
+    setTimeout(() => {
+        const card = document.querySelector('.card');
+        card.scrollTo({
+            top: card.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100); // 延遲0.1秒確保畫面都長出來了才滑動
 }
 
 function nextQuestion() { renderQuestion(); }
@@ -1866,4 +1881,5 @@ init();
 </script>
 </body>
 </html>
+
 
